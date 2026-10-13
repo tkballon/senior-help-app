@@ -6,15 +6,12 @@
   <title>Senior Help – Educação Financeira para Idosos</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #1a1a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-    .phone { width: 390px; height: 780px; background: #000; border-radius: 40px; padding: 12px; box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 3px #333; position: relative; overflow: hidden; }
-    .phone-notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 150px; height: 28px; background: #000; border-radius: 0 0 18px 18px; z-index: 100; }
-    .screen { width: 100%; height: 100%; background: #f5f7fa; border-radius: 32px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
-    .status-bar { height: 44px; background: #0a2540; display: flex; justify-content: space-between; align-items: center; padding: 0 24px; color: white; font-size: 14px; font-weight: 600; padding-top: 8px; }
-    .page { display: none; flex: 1; flex-direction: column; overflow-y: auto; background: #f5f7fa; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f5f7fa; min-height: 100vh; max-width: 480px; margin: 0 auto; position: relative; }
+    .status-bar { height: 28px; background: #0a2540; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; color: white; font-size: 12px; font-weight: 600; }
+    .page { display: none; flex-direction: column; min-height: calc(100vh - 28px); background: #f5f7fa; }
     .page.active { display: flex; }
-    .login-page { background: linear-gradient(180deg, #0a2540 0%, #0d3b66 100%); color: white; padding: 40px 28px 28px; justify-content: center; }
-    .login-logo { text-align: center; margin-bottom: 40px; }
+    .login-page { background: linear-gradient(180deg, #0a2540 0%, #0d3b66 100%); color: white; padding: 48px 24px 32px; justify-content: center; min-height: 100vh; }
+    .login-logo { text-align: center; margin-bottom: 36px; }
     .login-logo h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
     .login-logo p { font-size: 16px; opacity: 0.85; line-height: 1.4; }
     .login-form { background: white; border-radius: 20px; padding: 28px 24px; color: #333; }
@@ -23,8 +20,9 @@
     .input-group { margin-bottom: 16px; }
     .input-group label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 6px; color: #333; }
     .input-group input { width: 100%; padding: 16px; font-size: 17px; border: 2px solid #ddd; border-radius: 12px; outline: none; }
+    .input-group input:focus { border-color: #0a2540; }
     .btn { display: block; width: 100%; padding: 18px; font-size: 18px; font-weight: 700; border: none; border-radius: 14px; cursor: pointer; text-align: center; }
-    .btn:active { transform: scale(0.97); opacity: 0.9; }
+    .btn:active { opacity: 0.9; }
     .btn-primary { background: #0a2540; color: white; margin-top: 8px; }
     .btn-secondary { background: #f0f2f5; color: #333; margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; }
     .divider { text-align: center; margin: 20px 0; color: #999; font-size: 14px; position: relative; }
@@ -34,17 +32,17 @@
     .header { background: #0a2540; color: white; padding: 16px 20px 18px; display: flex; align-items: center; gap: 12px; }
     .header h1 { font-size: 22px; font-weight: 700; flex: 1; }
     .header .back-btn { background: none; border: none; color: white; font-size: 28px; cursor: pointer; padding: 0 4px; line-height: 1; }
-    .home-content { padding: 20px; flex: 1; }
+    .home-content { padding: 20px; flex: 1; padding-bottom: 90px; }
     .welcome { background: linear-gradient(135deg, #0a2540, #1a4a7a); color: white; border-radius: 18px; padding: 24px; margin-bottom: 24px; }
     .welcome h2 { font-size: 24px; margin-bottom: 6px; }
     .welcome p { font-size: 16px; opacity: 0.9; }
     .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .menu-card { background: white; border-radius: 18px; padding: 22px 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.06); cursor: pointer; }
-    .menu-card:active { transform: scale(0.96); }
+    .menu-card:active { opacity: 0.9; }
     .menu-card .icon { font-size: 40px; margin-bottom: 10px; }
     .menu-card h3 { font-size: 16px; color: #0a2540; margin-bottom: 4px; }
     .menu-card p { font-size: 13px; color: #666; line-height: 1.3; }
-    .content-list { padding: 16px 20px 30px; }
+    .content-list { padding: 16px 20px 100px; }
     .content-card { background: white; border-radius: 16px; padding: 20px; margin-bottom: 14px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); cursor: pointer; display: flex; gap: 16px; align-items: flex-start; }
     .content-card:active { background: #f0f4f8; }
     .content-card .num { background: #0a2540; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; }
@@ -66,127 +64,122 @@
     .support-card .icon { font-size: 48px; margin-bottom: 12px; }
     .support-card h3 { font-size: 20px; color: #0a2540; margin-bottom: 8px; }
     .support-card p { font-size: 15px; color: #666; margin-bottom: 16px; line-height: 1.4; }
-    .bottom-nav { background: white; border-top: 1px solid #e0e0e0; display: flex; padding: 8px 0 12px; box-shadow: 0 -2px 10px rgba(0,0,0,0.04); }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; background: white; border-top: 1px solid #e0e0e0; display: flex; padding: 8px 0 12px; box-shadow: 0 -2px 10px rgba(0,0,0,0.04); z-index: 20; }
     .nav-item { flex: 1; text-align: center; padding: 6px 0; cursor: pointer; color: #999; font-size: 12px; font-weight: 600; }
     .nav-item.active { color: #0a2540; }
     .nav-item .nav-icon { font-size: 24px; display: block; margin-bottom: 2px; }
-    .toast { position: absolute; bottom: 90px; left: 20px; right: 20px; background: #0a2540; color: white; padding: 16px 20px; border-radius: 14px; font-size: 16px; text-align: center; opacity: 0; transform: translateY(20px); transition: all 0.3s; z-index: 50; pointer-events: none; }
+    .toast { position: fixed; bottom: 90px; left: 20px; right: 20px; max-width: 440px; margin: 0 auto; background: #0a2540; color: white; padding: 16px 20px; border-radius: 14px; font-size: 16px; text-align: center; opacity: 0; transform: translateY(20px); transition: all 0.3s; z-index: 50; pointer-events: none; }
     .toast.show { opacity: 1; transform: translateY(0); }
     .disclaimer { background: #fff8e6; border-radius: 12px; padding: 14px; font-size: 13px; color: #666; line-height: 1.4; margin-top: 16px; }
   </style>
 </head>
 <body>
-  <div class="phone">
-    <div class="phone-notch"></div>
-    <div class="screen">
-      <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
 
-      <div class="page login-page active" id="page-login">
-        <div class="login-logo"><h1>Senior Help</h1><p>“Um App que busca tranquilizar sua carteira...”</p></div>
-        <div class="login-form">
-          <h2>Criar uma conta</h2>
-          <p class="subtitle">Insira seu e-mail para se cadastrar neste aplicativo</p>
-          <div class="input-group"><label>E-mail</label><input type="email" id="email" placeholder="email@dominio.com" value="maria.silva@email.com"></div>
-          <button class="btn btn-primary" onclick="entrar()">Continuar</button>
-          <div class="divider">ou</div>
-          <button class="btn btn-secondary" onclick="entrar()"><span>G</span> Continuar com o Google</button>
-          <button class="btn btn-secondary" onclick="entrar()">Continuar com a Apple</button>
-          <p class="terms">Ao clicar em continuar, você concorda com os nossos Termos de Serviço e com a Política de Privacidade</p>
-        </div>
-      </div>
-
-      <div class="page" id="page-home">
-        <div class="header"><h1>Senior Help</h1></div>
-        <div class="home-content">
-          <div class="welcome"><h2>Olá, Maria! 👋</h2><p>Bem-vinda. Vamos cuidar juntos do seu dinheiro com segurança e tranquilidade.</p></div>
-          <div class="menu-grid">
-            <div class="menu-card" onclick="irPara('aprender')"><div class="icon">📚</div><h3>Aprenda</h3><p>Conteúdos claros sobre finanças</p></div>
-            <div class="menu-card" onclick="irPara('proteja')"><div class="icon">🛡️</div><h3>Proteja</h3><p>Dicas para evitar golpes</p></div>
-            <div class="menu-card" onclick="irPara('investir')"><div class="icon">💰</div><h3>Investir</h3><p>Opções seguras para a velhice</p></div>
-            <div class="menu-card" onclick="irPara('apoio')"><div class="icon">🤝</div><h3>Apoio</h3><p>Peça ajuda a familiares</p></div>
-          </div>
-          <div class="disclaimer"><strong>Aviso:</strong> Este app tem caráter educativo. Não substitui orientação de profissionais certificados (CVM / Banco Central).</div>
-        </div>
-        <div class="bottom-nav">
-          <div class="nav-item active" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-          <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-          <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-          <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
-        </div>
-      </div>
-
-      <div class="page" id="page-aprender">
-        <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Aprenda com facilidade</h1></div>
-        <div class="content-list">
-          <div class="content-card" onclick="abrirArtigo('inss')"><div class="num">1</div><div><h3>Entendendo o INSS</h3><p>Como funciona a aposentadoria e seus direitos básicos.</p></div></div>
-          <div class="content-card" onclick="abrirArtigo('poupanca')"><div class="num">2</div><div><h3>Além da Poupança</h3><p>Por que a poupança sozinha não protege seu dinheiro da inflação.</p></div></div>
-          <div class="content-card" onclick="abrirArtigo('produtos')"><div class="num">3</div><div><h3>Produtos que o banco oferece</h3><p>Cuidado com títulos de capitalização e empréstimos consignados.</p></div></div>
-          <div class="content-card" onclick="abrirArtigo('linguagem')"><div class="num">4</div><div><h3>Linguagem simples do mercado</h3><p>Palavras que os bancos usam e o que elas realmente significam.</p></div></div>
-        </div>
-        <div class="bottom-nav">
-          <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-          <div class="nav-item active" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-          <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-          <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
-        </div>
-      </div>
-
-      <div class="page" id="page-artigo">
-        <div class="header"><button class="back-btn" onclick="voltarArtigo()">‹</button><h1 id="artigo-titulo">Artigo</h1></div>
-        <div class="article" id="artigo-conteudo"></div>
-      </div>
-
-      <div class="page" id="page-proteja">
-        <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Proteja seu dinheiro</h1></div>
-        <div class="content-list">
-          <div class="tip-card"><h3>🚨 Kit Fraude / Assédio comercial</h3><p>Nunca aceite propostas de “empréstimo fácil” ou “investimento garantido” feitas por telefone ou WhatsApp. Bancos legítimos não ligam pedindo senha ou dados do cartão.</p></div>
-          <div class="tip-card green"><h3>✅ Pressão familiar</h3><p>Se um parente pedir dinheiro emprestado ou para “investir juntos”, peça tempo para pensar. Converse com outra pessoa de confiança antes de decidir.</p></div>
-          <div class="tip-card blue"><h3>📱 Golpes virtuais</h3><p>Desconfie de links enviados por SMS ou e-mail. O INSS e bancos nunca pedem dados por mensagem. Em caso de dúvida, ligue você mesmo no número oficial.</p></div>
-          <div class="tip-card"><h3>🏦 Títulos de capitalização</h3><p>Muitos gerentes oferecem títulos de capitalização como se fossem investimento. Eles não são. O rendimento é baixo e o dinheiro fica preso por anos.</p></div>
-          <div class="tip-card green"><h3>🔒 Crédito consignado</h3><p>Só contrate se realmente precisar. Verifique a taxa de juros e o valor da parcela. Nunca assine nada sem ler com calma ou com a ajuda de alguém de confiança.</p></div>
-        </div>
-        <div class="bottom-nav">
-          <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-          <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-          <div class="nav-item active" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-          <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
-        </div>
-      </div>
-
-      <div class="page" id="page-investir">
-        <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Melhores aplicações</h1></div>
-        <div class="content-list">
-          <div class="content-card" onclick="abrirArtigo('renda')"><div class="num">📈</div><div><h3>Geração de Renda Mensal</h3><p>Fundos Imobiliários (FIIs) e Ações de Dividendos – explicado de forma simples.</p></div></div>
-          <div class="content-card" onclick="abrirArtigo('inflacao')"><div class="num">🛡️</div><div><h3>Proteção contra a Inflação</h3><p>Tesouro IPCA+ com juros semestrais – o que é e por que importa.</p></div></div>
-          <div class="content-card" onclick="abrirArtigo('seguranca')"><div class="num">🔒</div><div><h3>Segurança e Liquidez</h3><p>Tesouro Selic e CDBs de liquidez diária – dinheiro disponível quando precisar.</p></div></div>
-          <div class="disclaimer"><strong>Importante:</strong> A educação financeira para idosos não busca “ficar rico”, mas otimizar o que já foi construído e garantir autonomia.</div>
-        </div>
-        <div class="bottom-nav">
-          <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-          <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-          <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-          <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
-        </div>
-      </div>
-
-      <div class="page" id="page-apoio">
-        <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Conte com apoio</h1></div>
-        <div class="content-list">
-          <div class="support-card"><div class="icon">👨‍👩‍👧</div><h3>Chamar um familiar</h3><p>Envie um resumo do que você está aprendendo ou peça ajuda para entender um produto financeiro.</p><button class="btn btn-primary" onclick="mostrarToast('Mensagem enviada para seu contato de confiança!')">Enviar resumo</button></div>
-          <div class="support-card"><div class="icon">📞</div><h3>Falar com alguém de confiança</h3><p>Tenha sempre o número de um filho, neto ou amigo próximo salvo e fácil de encontrar.</p><button class="btn btn-primary" onclick="mostrarToast('Abrindo contatos... (simulação)')">Ver contatos salvos</button></div>
-          <div class="support-card"><div class="icon">❓</div><h3>Dúvidas frequentes</h3><p>Respostas simples para as perguntas mais comuns sobre INSS, bancos e investimentos.</p><button class="btn btn-primary" onclick="irPara('aprender')">Ver perguntas</button></div>
-        </div>
-        <div class="bottom-nav">
-          <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-          <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-          <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-          <div class="nav-item active" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
-        </div>
-      </div>
-
-      <div class="toast" id="toast"></div>
+  <div class="page login-page active" id="page-login">
+    <div class="login-logo"><h1>Senior Help</h1><p>“Um App que busca tranquilizar sua carteira...”</p></div>
+    <div class="login-form">
+      <h2>Criar uma conta</h2>
+      <p class="subtitle">Insira seu e-mail para se cadastrar neste aplicativo</p>
+      <div class="input-group"><label>E-mail</label><input type="email" id="email" placeholder="email@dominio.com" value="maria.silva@email.com"></div>
+      <button class="btn btn-primary" onclick="entrar()">Continuar</button>
+      <div class="divider">ou</div>
+      <button class="btn btn-secondary" onclick="entrar()"><span>G</span> Continuar com o Google</button>
+      <button class="btn btn-secondary" onclick="entrar()">Continuar com a Apple</button>
+      <p class="terms">Ao clicar em continuar, você concorda com os nossos Termos de Serviço e com a Política de Privacidade</p>
     </div>
   </div>
+
+  <div class="page" id="page-home">
+    <div class="header"><h1>Senior Help</h1></div>
+    <div class="home-content">
+      <div class="welcome"><h2>Olá, Maria! 👋</h2><p>Bem-vinda. Vamos cuidar juntos do seu dinheiro com segurança e tranquilidade.</p></div>
+      <div class="menu-grid">
+        <div class="menu-card" onclick="irPara('aprender')"><div class="icon">📚</div><h3>Aprenda</h3><p>Conteúdos claros sobre finanças</p></div>
+        <div class="menu-card" onclick="irPara('proteja')"><div class="icon">🛡️</div><h3>Proteja</h3><p>Dicas para evitar golpes</p></div>
+        <div class="menu-card" onclick="irPara('investir')"><div class="icon">💰</div><h3>Investir</h3><p>Opções seguras para a velhice</p></div>
+        <div class="menu-card" onclick="irPara('apoio')"><div class="icon">🤝</div><h3>Apoio</h3><p>Peça ajuda a familiares</p></div>
+      </div>
+      <div class="disclaimer"><strong>Aviso:</strong> Este app tem caráter educativo. Não substitui orientação de profissionais certificados (CVM / Banco Central).</div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item active" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
+      <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
+      <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
+      <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    </div>
+  </div>
+
+  <div class="page" id="page-aprender">
+    <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Aprenda com facilidade</h1></div>
+    <div class="content-list">
+      <div class="content-card" onclick="abrirArtigo('inss')"><div class="num">1</div><div><h3>Entendendo o INSS</h3><p>Como funciona a aposentadoria e seus direitos básicos.</p></div></div>
+      <div class="content-card" onclick="abrirArtigo('poupanca')"><div class="num">2</div><div><h3>Além da Poupança</h3><p>Por que a poupança sozinha não protege seu dinheiro da inflação.</p></div></div>
+      <div class="content-card" onclick="abrirArtigo('produtos')"><div class="num">3</div><div><h3>Produtos que o banco oferece</h3><p>Cuidado com títulos de capitalização e empréstimos consignados.</p></div></div>
+      <div class="content-card" onclick="abrirArtigo('linguagem')"><div class="num">4</div><div><h3>Linguagem simples do mercado</h3><p>Palavras que os bancos usam e o que elas realmente significam.</p></div></div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
+      <div class="nav-item active" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
+      <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
+      <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    </div>
+  </div>
+
+  <div class="page" id="page-artigo">
+    <div class="header"><button class="back-btn" onclick="voltarArtigo()">‹</button><h1 id="artigo-titulo">Artigo</h1></div>
+    <div class="article" id="artigo-conteudo"></div>
+  </div>
+
+  <div class="page" id="page-proteja">
+    <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Proteja seu dinheiro</h1></div>
+    <div class="content-list">
+      <div class="tip-card"><h3>🚨 Kit Fraude / Assédio comercial</h3><p>Nunca aceite propostas de “empréstimo fácil” ou “investimento garantido” feitas por telefone ou WhatsApp. Bancos legítimos não ligam pedindo senha ou dados do cartão.</p></div>
+      <div class="tip-card green"><h3>✅ Pressão familiar</h3><p>Se um parente pedir dinheiro emprestado ou para “investir juntos”, peça tempo para pensar. Converse com outra pessoa de confiança antes de decidir.</p></div>
+      <div class="tip-card blue"><h3>📱 Golpes virtuais</h3><p>Desconfie de links enviados por SMS ou e-mail. O INSS e bancos nunca pedem dados por mensagem. Em caso de dúvida, ligue você mesmo no número oficial.</p></div>
+      <div class="tip-card"><h3>🏦 Títulos de capitalização</h3><p>Muitos gerentes oferecem títulos de capitalização como se fossem investimento. Eles não são. O rendimento é baixo e o dinheiro fica preso por anos.</p></div>
+      <div class="tip-card green"><h3>🔒 Crédito consignado</h3><p>Só contrate se realmente precisar. Verifique a taxa de juros e o valor da parcela. Nunca assine nada sem ler com calma ou com a ajuda de alguém de confiança.</p></div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
+      <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
+      <div class="nav-item active" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
+      <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    </div>
+  </div>
+
+  <div class="page" id="page-investir">
+    <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Melhores aplicações</h1></div>
+    <div class="content-list">
+      <div class="content-card" onclick="abrirArtigo('renda')"><div class="num">📈</div><div><h3>Geração de Renda Mensal</h3><p>Fundos Imobiliários (FIIs) e Ações de Dividendos – explicado de forma simples.</p></div></div>
+      <div class="content-card" onclick="abrirArtigo('inflacao')"><div class="num">🛡️</div><div><h3>Proteção contra a Inflação</h3><p>Tesouro IPCA+ com juros semestrais – o que é e por que importa.</p></div></div>
+      <div class="content-card" onclick="abrirArtigo('seguranca')"><div class="num">🔒</div><div><h3>Segurança e Liquidez</h3><p>Tesouro Selic e CDBs de liquidez diária – dinheiro disponível quando precisar.</p></div></div>
+      <div class="disclaimer"><strong>Importante:</strong> A educação financeira para idosos não busca “ficar rico”, mas otimizar o que já foi construído e garantir autonomia.</div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
+      <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
+      <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
+      <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    </div>
+  </div>
+
+  <div class="page" id="page-apoio">
+    <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Conte com apoio</h1></div>
+    <div class="content-list">
+      <div class="support-card"><div class="icon">👨‍👩‍👧</div><h3>Chamar um familiar</h3><p>Envie um resumo do que você está aprendendo ou peça ajuda para entender um produto financeiro.</p><button class="btn btn-primary" onclick="mostrarToast('Mensagem enviada para seu contato de confiança!')">Enviar resumo</button></div>
+      <div class="support-card"><div class="icon">📞</div><h3>Falar com alguém de confiança</h3><p>Tenha sempre o número de um filho, neto ou amigo próximo salvo e fácil de encontrar.</p><button class="btn btn-primary" onclick="mostrarToast('Abrindo contatos... (simulação)')">Ver contatos salvos</button></div>
+      <div class="support-card"><div class="icon">❓</div><h3>Dúvidas frequentes</h3><p>Respostas simples para as perguntas mais comuns sobre INSS, bancos e investimentos.</p><button class="btn btn-primary" onclick="irPara('aprender')">Ver perguntas</button></div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
+      <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
+      <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
+      <div class="nav-item active" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
   <script>
     const artigos = {
