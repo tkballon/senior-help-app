@@ -6,101 +6,518 @@
   <title>Senior Help – Educação Financeira para Idosos</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f5f7fa; min-height: 100vh; max-width: 480px; margin: 0 auto; position: relative; }
-    .status-bar { height: 28px; background: #0a2540; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; color: white; font-size: 12px; font-weight: 600; }
-    .page { display: none; flex-direction: column; min-height: calc(100vh - 28px); background: #f5f7fa; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #eef2f6;
+      min-height: 100vh;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+      color: #1a1a1a;
+    }
+
+    .status-bar {
+      height: 28px;
+      background: #0a2540;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .page {
+      display: none;
+      flex-direction: column;
+      min-height: calc(100vh - 28px);
+      background: #eef2f6;
+    }
     .page.active { display: flex; }
-    .login-page { background: linear-gradient(180deg, #0a2540 0%, #0d3b66 100%); color: white; padding: 48px 24px 32px; justify-content: center; min-height: 100vh; }
-    .login-logo { text-align: center; margin-bottom: 36px; }
-    .login-logo h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
-    .login-logo p { font-size: 16px; opacity: 0.85; line-height: 1.4; }
-    .login-form { background: white; border-radius: 20px; padding: 28px 24px; color: #333; }
-    .login-form h2 { font-size: 22px; margin-bottom: 8px; color: #0a2540; }
-    .login-form .subtitle { font-size: 15px; color: #666; margin-bottom: 24px; }
+
+    .login-page {
+      background: linear-gradient(165deg, #0a2540 0%, #0d3b66 55%, #1a4a7a 100%);
+      color: white;
+      padding: 40px 22px 32px;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(233,168,37,0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0%, transparent 35%);
+      pointer-events: none;
+    }
+    .login-logo { text-align: center; margin-bottom: 32px; position: relative; z-index: 1; }
+    .login-logo h1 {
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .login-logo p {
+      font-size: 17px;
+      opacity: 0.9;
+      line-height: 1.45;
+      max-width: 280px;
+      margin: 0 auto;
+      color: #f0d78c;
+    }
+    .login-form {
+      background: white;
+      border-radius: 22px;
+      padding: 28px 24px;
+      color: #333;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+    .login-form h2 {
+      font-size: 22px;
+      margin-bottom: 6px;
+      color: #0a2540;
+    }
+    .login-form .subtitle {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 22px;
+    }
     .input-group { margin-bottom: 16px; }
-    .input-group label { display: block; font-size: 15px; font-weight: 600; margin-bottom: 6px; color: #333; }
-    .input-group input { width: 100%; padding: 16px; font-size: 17px; border: 2px solid #ddd; border-radius: 12px; outline: none; }
+    .input-group label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 16px 18px;
+      font-size: 17px;
+      border: 2px solid #dde3ea;
+      border-radius: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
     .input-group input:focus { border-color: #0a2540; }
-    .btn { display: block; width: 100%; padding: 18px; font-size: 18px; font-weight: 700; border: none; border-radius: 14px; cursor: pointer; text-align: center; }
-    .btn:active { opacity: 0.9; }
-    .btn-primary { background: #0a2540; color: white; margin-top: 8px; }
-    .btn-secondary { background: #f0f2f5; color: #333; margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .divider { text-align: center; margin: 20px 0; color: #999; font-size: 14px; position: relative; }
-    .divider::before, .divider::after { content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background: #ddd; }
-    .divider::before { left: 0; } .divider::after { right: 0; }
-    .terms { font-size: 12px; color: #888; text-align: center; margin-top: 16px; line-height: 1.4; }
-    .header { background: #0a2540; color: white; padding: 16px 20px 18px; display: flex; align-items: center; gap: 12px; }
-    .header h1 { font-size: 22px; font-weight: 700; flex: 1; }
-    .header .back-btn { background: none; border: none; color: white; font-size: 28px; cursor: pointer; padding: 0 4px; line-height: 1; }
-    .home-content { padding: 20px; flex: 1; padding-bottom: 90px; }
-    .welcome { background: linear-gradient(135deg, #0a2540, #1a4a7a); color: white; border-radius: 18px; padding: 24px; margin-bottom: 24px; }
-    .welcome h2 { font-size: 24px; margin-bottom: 6px; }
-    .welcome p { font-size: 16px; opacity: 0.9; }
-    .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .menu-card { background: white; border-radius: 18px; padding: 22px 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.06); cursor: pointer; }
-    .menu-card:active { opacity: 0.9; }
-    .menu-card .icon { font-size: 40px; margin-bottom: 10px; }
-    .menu-card h3 { font-size: 16px; color: #0a2540; margin-bottom: 4px; }
-    .menu-card p { font-size: 13px; color: #666; line-height: 1.3; }
-    .content-list { padding: 16px 20px 100px; }
-    .content-card { background: white; border-radius: 16px; padding: 20px; margin-bottom: 14px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); cursor: pointer; display: flex; gap: 16px; align-items: flex-start; }
-    .content-card:active { background: #f0f4f8; }
-    .content-card .num { background: #0a2540; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; }
-    .content-card h3 { font-size: 17px; color: #0a2540; margin-bottom: 4px; }
-    .content-card p { font-size: 14px; color: #666; line-height: 1.4; }
-    .article { padding: 20px 24px 40px; }
-    .article h2 { font-size: 24px; color: #0a2540; margin-bottom: 12px; line-height: 1.3; }
-    .article .tag { display: inline-block; background: #e8f0fe; color: #0a2540; font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 18px; }
-    .article p { font-size: 17px; line-height: 1.65; color: #333; margin-bottom: 16px; }
-    .article .highlight { background: #fff8e6; border-left: 4px solid #f5a623; padding: 14px 16px; border-radius: 0 12px 12px 0; margin: 20px 0; font-size: 16px; }
-    .article ul { margin: 12px 0 16px 20px; }
-    .article li { font-size: 16px; line-height: 1.6; margin-bottom: 8px; color: #333; }
-    .tip-card { background: white; border-radius: 16px; padding: 20px; margin-bottom: 14px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border-left: 5px solid #e74c3c; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn:active { opacity: 0.88; transform: scale(0.99); }
+    .btn-primary {
+      background: #0a2540;
+      color: white;
+      margin-top: 8px;
+    }
+    .btn-secondary {
+      background: #f0f3f7;
+      color: #333;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+    .divider {
+      text-align: center;
+      margin: 18px 0;
+      color: #999;
+      font-size: 14px;
+      position: relative;
+    }
+    .divider::before, .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 38%;
+      height: 1px;
+      background: #ddd;
+    }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+    .terms {
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      margin-top: 16px;
+      line-height: 1.4;
+    }
+
+    .header {
+      background: #0a2540;
+      color: white;
+      padding: 16px 18px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 12px rgba(10,37,64,0.25);
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      flex: 1;
+      letter-spacing: -0.3px;
+    }
+    .header .back-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      padding: 0 6px;
+      line-height: 1;
+    }
+
+    .home-content {
+      padding: 20px 18px;
+      flex: 1;
+      padding-bottom: 100px;
+    }
+    .welcome {
+      background: linear-gradient(135deg, #0a2540 0%, #1a4a7a 100%);
+      color: white;
+      border-radius: 20px;
+      padding: 26px 22px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(10,37,64,0.2);
+    }
+    .welcome::after {
+      content: "";
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(233,168,37,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .welcome h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .welcome p {
+      font-size: 16px;
+      opacity: 0.92;
+      line-height: 1.45;
+      position: relative;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .menu-card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px 14px 20px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      cursor: pointer;
+      border: 1px solid rgba(10,37,64,0.04);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .menu-card:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .menu-card .icon {
+      font-size: 38px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .menu-card h3 {
+      font-size: 16px;
+      color: #0a2540;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+    .menu-card p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.35;
+    }
+
+    .content-list {
+      padding: 16px 18px 110px;
+    }
+    .content-card {
+      background: white;
+      border-radius: 16px;
+      padding: 18px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+      cursor: pointer;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      border: 1px solid rgba(10,37,64,0.04);
+    }
+    .content-card:active { background: #f5f8fb; }
+    .content-card .num {
+      background: #0a2540;
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .content-card h3 {
+      font-size: 16px;
+      color: #0a2540;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .content-card p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .article {
+      padding: 20px 22px 50px;
+      background: white;
+      flex: 1;
+    }
+    .article h2 {
+      font-size: 23px;
+      color: #0a2540;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .article .tag {
+      display: inline-block;
+      background: #e8f0fe;
+      color: #0a2540;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .article p {
+      font-size: 17px;
+      line-height: 1.65;
+      color: #333;
+      margin-bottom: 16px;
+    }
+    .article .highlight {
+      background: #fff8e6;
+      border-left: 5px solid #e9a825;
+      padding: 16px 18px;
+      border-radius: 0 14px 14px 0;
+      margin: 20px 0;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #444;
+    }
+    .article ul {
+      margin: 10px 0 18px 22px;
+    }
+    .article li {
+      font-size: 16px;
+      line-height: 1.55;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .tip-card {
+      background: white;
+      border-radius: 16px;
+      padding: 18px 18px 18px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+      border-left: 5px solid #c0392b;
+    }
     .tip-card.green { border-left-color: #27ae60; }
     .tip-card.blue { border-left-color: #2980b9; }
-    .tip-card h3 { font-size: 17px; color: #0a2540; margin-bottom: 8px; }
-    .tip-card p { font-size: 15px; color: #555; line-height: 1.5; }
-    .support-card { background: white; border-radius: 18px; padding: 24px; margin-bottom: 16px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); text-align: center; }
-    .support-card .icon { font-size: 48px; margin-bottom: 12px; }
-    .support-card h3 { font-size: 20px; color: #0a2540; margin-bottom: 8px; }
-    .support-card p { font-size: 15px; color: #666; margin-bottom: 16px; line-height: 1.4; }
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; background: white; border-top: 1px solid #e0e0e0; display: flex; padding: 8px 0 12px; box-shadow: 0 -2px 10px rgba(0,0,0,0.04); z-index: 20; }
-    .nav-item { flex: 1; text-align: center; padding: 6px 0; cursor: pointer; color: #999; font-size: 12px; font-weight: 600; }
+    .tip-card.gold { border-left-color: #e9a825; }
+    .tip-card h3 {
+      font-size: 16px;
+      color: #0a2540;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .tip-card p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .support-card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .support-card .icon {
+      font-size: 44px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .support-card h3 {
+      font-size: 19px;
+      color: #0a2540;
+      margin-bottom: 8px;
+    }
+    .support-card p {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 480px;
+      margin: 0 auto;
+      background: white;
+      border-top: 1px solid #e4e8ee;
+      display: flex;
+      padding: 8px 0 14px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      padding: 6px 0;
+      cursor: pointer;
+      color: #999;
+      font-size: 11px;
+      font-weight: 600;
+    }
     .nav-item.active { color: #0a2540; }
-    .nav-item .nav-icon { font-size: 24px; display: block; margin-bottom: 2px; }
-    .toast { position: fixed; bottom: 90px; left: 20px; right: 20px; max-width: 440px; margin: 0 auto; background: #0a2540; color: white; padding: 16px 20px; border-radius: 14px; font-size: 16px; text-align: center; opacity: 0; transform: translateY(20px); transition: all 0.3s; z-index: 50; pointer-events: none; }
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .disclaimer { background: #fff8e6; border-radius: 12px; padding: 14px; font-size: 13px; color: #666; line-height: 1.4; margin-top: 16px; }
+    .nav-item .nav-icon {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 95px;
+      left: 18px;
+      right: 18px;
+      max-width: 444px;
+      margin: 0 auto;
+      background: #0a2540;
+      color: white;
+      padding: 16px 20px;
+      border-radius: 14px;
+      font-size: 16px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: all 0.3s;
+      z-index: 50;
+      pointer-events: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .disclaimer {
+      background: #fff8e6;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.45;
+      margin-top: 18px;
+      border: 1px solid rgba(233,168,37,0.25);
+    }
+    .disclaimer strong { color: #0a2540; }
   </style>
 </head>
 <body>
-  <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+  <div class="status-bar">
+    <span>9:41</span>
+    <span>📶 🔋</span>
+  </div>
 
   <div class="page login-page active" id="page-login">
-    <div class="login-logo"><h1>Senior Help</h1><p>“Um App que busca tranquilizar sua carteira...”</p></div>
+    <div class="login-logo">
+      <h1>Senior Help</h1>
+      <p>“Um app que busca tranquilizar sua carteira...”</p>
+    </div>
     <div class="login-form">
       <h2>Criar uma conta</h2>
-      <p class="subtitle">Insira seu e-mail para se cadastrar neste aplicativo</p>
-      <div class="input-group"><label>E-mail</label><input type="email" id="email" placeholder="email@dominio.com" value="maria.silva@email.com"></div>
+      <p class="subtitle">Digite seu e-mail para começar a usar o aplicativo</p>
+      <div class="input-group">
+        <label>E-mail</label>
+        <input type="email" id="email" placeholder="seu.email@exemplo.com" value="maria.silva@email.com">
+      </div>
       <button class="btn btn-primary" onclick="entrar()">Continuar</button>
       <div class="divider">ou</div>
       <button class="btn btn-secondary" onclick="entrar()"><span>G</span> Continuar com o Google</button>
       <button class="btn btn-secondary" onclick="entrar()">Continuar com a Apple</button>
-      <p class="terms">Ao clicar em continuar, você concorda com os nossos Termos de Serviço e com a Política de Privacidade</p>
+      <p class="terms">Ao continuar, você concorda com nossos Termos de Serviço e com a Política de Privacidade</p>
     </div>
   </div>
 
   <div class="page" id="page-home">
     <div class="header"><h1>Senior Help</h1></div>
     <div class="home-content">
-      <div class="welcome"><h2>Olá, Maria! 👋</h2><p>Bem-vinda. Vamos cuidar juntos do seu dinheiro com segurança e tranquilidade.</p></div>
-      <div class="menu-grid">
-        <div class="menu-card" onclick="irPara('aprender')"><div class="icon">📚</div><h3>Aprenda</h3><p>Conteúdos claros sobre finanças</p></div>
-        <div class="menu-card" onclick="irPara('proteja')"><div class="icon">🛡️</div><h3>Proteja</h3><p>Dicas para evitar golpes</p></div>
-        <div class="menu-card" onclick="irPara('investir')"><div class="icon">💰</div><h3>Investir</h3><p>Opções seguras para a velhice</p></div>
-        <div class="menu-card" onclick="irPara('apoio')"><div class="icon">🤝</div><h3>Apoio</h3><p>Peça ajuda a familiares</p></div>
+      <div class="welcome">
+        <h2>Olá, Maria!</h2>
+        <p>Bem-vinda. Vamos cuidar juntos do seu dinheiro, com segurança e tranquilidade.</p>
       </div>
-      <div class="disclaimer"><strong>Aviso:</strong> Este app tem caráter educativo. Não substitui orientação de profissionais certificados (CVM / Banco Central).</div>
+      <div class="menu-grid">
+        <div class="menu-card" onclick="irPara('aprender')">
+          <span class="icon">📚</span>
+          <h3>Aprenda</h3>
+          <p>Textos claros sobre dinheiro e INSS</p>
+        </div>
+        <div class="menu-card" onclick="irPara('proteja')">
+          <span class="icon">🛡️</span>
+          <h3>Proteja</h3>
+          <p>Dicas para evitar golpes</p>
+        </div>
+        <div class="menu-card" onclick="irPara('investir')">
+          <span class="icon">💰</span>
+          <h3>Investir</h3>
+          <p>Opções mais seguras para a velhice</p>
+        </div>
+        <div class="menu-card" onclick="irPara('apoio')">
+          <span class="icon">🤝</span>
+          <h3>Apoio</h3>
+          <p>Peça ajuda a quem você confia</p>
+        </div>
+      </div>
+      <div class="disclaimer">
+        <strong>Aviso importante:</strong> Este app é só para educação. Ele não substitui a orientação de profissionais certificados (CVM / Banco Central). A decisão final é sempre sua.
+      </div>
     </div>
     <div class="bottom-nav">
       <div class="nav-item active" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
@@ -111,12 +528,39 @@
   </div>
 
   <div class="page" id="page-aprender">
-    <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Aprenda com facilidade</h1></div>
+    <div class="header">
+      <button class="back-btn" onclick="irPara('home')">‹</button>
+      <h1>Aprenda com facilidade</h1>
+    </div>
     <div class="content-list">
-      <div class="content-card" onclick="abrirArtigo('inss')"><div class="num">1</div><div><h3>Entendendo o INSS</h3><p>Como funciona a aposentadoria e seus direitos básicos.</p></div></div>
-      <div class="content-card" onclick="abrirArtigo('poupanca')"><div class="num">2</div><div><h3>Além da Poupança</h3><p>Por que a poupança sozinha não protege seu dinheiro da inflação.</p></div></div>
-      <div class="content-card" onclick="abrirArtigo('produtos')"><div class="num">3</div><div><h3>Produtos que o banco oferece</h3><p>Cuidado com títulos de capitalização e empréstimos consignados.</p></div></div>
-      <div class="content-card" onclick="abrirArtigo('linguagem')"><div class="num">4</div><div><h3>Linguagem simples do mercado</h3><p>Palavras que os bancos usam e o que elas realmente significam.</p></div></div>
+      <div class="content-card" onclick="abrirArtigo('inss')">
+        <div class="num">1</div>
+        <div>
+          <h3>Entendendo o INSS</h3>
+          <p>Como funciona a aposentadoria e seus direitos básicos.</p>
+        </div>
+      </div>
+      <div class="content-card" onclick="abrirArtigo('poupanca')">
+        <div class="num">2</div>
+        <div>
+          <h3>Além da poupança</h3>
+          <p>Por que a poupança sozinha não protege o dinheiro da inflação.</p>
+        </div>
+      </div>
+      <div class="content-card" onclick="abrirArtigo('produtos')">
+        <div class="num">3</div>
+        <div>
+          <h3>Produtos que o banco oferece</h3>
+          <p>Cuidado com títulos de capitalização e empréstimos consignados.</p>
+        </div>
+      </div>
+      <div class="content-card" onclick="abrirArtigo('linguagem')">
+        <div class="num">4</div>
+        <div>
+          <h3>Palavras do dia a dia do mercado</h3>
+          <p>O que significam termos que os bancos costumam usar.</p>
+        </div>
+      </div>
     </div>
     <div class="bottom-nav">
       <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
@@ -127,18 +571,39 @@
   </div>
 
   <div class="page" id="page-artigo">
-    <div class="header"><button class="back-btn" onclick="voltarArtigo()">‹</button><h1 id="artigo-titulo">Artigo</h1></div>
+    <div class="header">
+      <button class="back-btn" onclick="voltarArtigo()">‹</button>
+      <h1 id="artigo-titulo">Artigo</h1>
+    </div>
     <div class="article" id="artigo-conteudo"></div>
   </div>
 
   <div class="page" id="page-proteja">
-    <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Proteja seu dinheiro</h1></div>
+    <div class="header">
+      <button class="back-btn" onclick="irPara('home')">‹</button>
+      <h1>Proteja seu dinheiro</h1>
+    </div>
     <div class="content-list">
-      <div class="tip-card"><h3>🚨 Kit Fraude / Assédio comercial</h3><p>Nunca aceite propostas de “empréstimo fácil” ou “investimento garantido” feitas por telefone ou WhatsApp. Bancos legítimos não ligam pedindo senha ou dados do cartão.</p></div>
-      <div class="tip-card green"><h3>✅ Pressão familiar</h3><p>Se um parente pedir dinheiro emprestado ou para “investir juntos”, peça tempo para pensar. Converse com outra pessoa de confiança antes de decidir.</p></div>
-      <div class="tip-card blue"><h3>📱 Golpes virtuais</h3><p>Desconfie de links enviados por SMS ou e-mail. O INSS e bancos nunca pedem dados por mensagem. Em caso de dúvida, ligue você mesmo no número oficial.</p></div>
-      <div class="tip-card"><h3>🏦 Títulos de capitalização</h3><p>Muitos gerentes oferecem títulos de capitalização como se fossem investimento. Eles não são. O rendimento é baixo e o dinheiro fica preso por anos.</p></div>
-      <div class="tip-card green"><h3>🔒 Crédito consignado</h3><p>Só contrate se realmente precisar. Verifique a taxa de juros e o valor da parcela. Nunca assine nada sem ler com calma ou com a ajuda de alguém de confiança.</p></div>
+      <div class="tip-card">
+        <h3>🚨 Kit Fraude e assédio comercial</h3>
+        <p>Nunca aceite propostas de “empréstimo fácil” ou “investimento garantido” feitas por telefone ou WhatsApp. Banco de verdade não liga pedindo senha ou dados do cartão.</p>
+      </div>
+      <div class="tip-card green">
+        <h3>✅ Pressão da família</h3>
+        <p>Se um parente pedir dinheiro emprestado ou para “investir juntos”, peça tempo para pensar. Converse com outra pessoa de confiança antes de decidir.</p>
+      </div>
+      <div class="tip-card blue">
+        <h3>📱 Golpes na internet</h3>
+        <p>Desconfie de links enviados por SMS ou e-mail. O INSS e os bancos nunca pedem dados por mensagem. Em caso de dúvida, ligue você mesmo no número oficial.</p>
+      </div>
+      <div class="tip-card gold">
+        <h3>🏦 Títulos de capitalização</h3>
+        <p>Muitos gerentes oferecem títulos de capitalização como se fossem investimento. Eles não são. O rendimento é baixo e o dinheiro fica preso por anos.</p>
+      </div>
+      <div class="tip-card green">
+        <h3>🔒 Crédito consignado</h3>
+        <p>Só contrate se realmente precisar. Veja a taxa de juros e o valor da parcela. Nunca assine nada sem ler com calma ou com a ajuda de alguém de confiança.</p>
+      </div>
     </div>
     <div class="bottom-nav">
       <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
@@ -149,12 +614,35 @@
   </div>
 
   <div class="page" id="page-investir">
-    <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Melhores aplicações</h1></div>
+    <div class="header">
+      <button class="back-btn" onclick="irPara('home')">‹</button>
+      <h1>Opções mais seguras</h1>
+    </div>
     <div class="content-list">
-      <div class="content-card" onclick="abrirArtigo('renda')"><div class="num">📈</div><div><h3>Geração de Renda Mensal</h3><p>Fundos Imobiliários (FIIs) e Ações de Dividendos – explicado de forma simples.</p></div></div>
-      <div class="content-card" onclick="abrirArtigo('inflacao')"><div class="num">🛡️</div><div><h3>Proteção contra a Inflação</h3><p>Tesouro IPCA+ com juros semestrais – o que é e por que importa.</p></div></div>
-      <div class="content-card" onclick="abrirArtigo('seguranca')"><div class="num">🔒</div><div><h3>Segurança e Liquidez</h3><p>Tesouro Selic e CDBs de liquidez diária – dinheiro disponível quando precisar.</p></div></div>
-      <div class="disclaimer"><strong>Importante:</strong> A educação financeira para idosos não busca “ficar rico”, mas otimizar o que já foi construído e garantir autonomia.</div>
+      <div class="content-card" onclick="abrirArtigo('renda')">
+        <div class="num">📈</div>
+        <div>
+          <h3>Renda todo mês</h3>
+          <p>Fundos Imobiliários e ações que pagam dividendos – explicados de forma simples.</p>
+        </div>
+      </div>
+      <div class="content-card" onclick="abrirArtigo('inflacao')">
+        <div class="num">🛡️</div>
+        <div>
+          <h3>Proteção contra a inflação</h3>
+          <p>Tesouro IPCA+ com juros a cada seis meses – o que é e por que importa.</p>
+        </div>
+      </div>
+      <div class="content-card" onclick="abrirArtigo('seguranca')">
+        <div class="num">🔒</div>
+        <div>
+          <h3>Segurança e dinheiro disponível</h3>
+          <p>Tesouro Selic e CDBs que podem ser resgatados a qualquer momento.</p>
+        </div>
+      </div>
+      <div class="disclaimer">
+        <strong>Importante:</strong> A educação financeira para idosos não busca “ficar rico”. O foco é cuidar bem do que já foi construído e manter a autonomia.
+      </div>
     </div>
     <div class="bottom-nav">
       <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
@@ -165,11 +653,29 @@
   </div>
 
   <div class="page" id="page-apoio">
-    <div class="header"><button class="back-btn" onclick="irPara('home')">‹</button><h1>Conte com apoio</h1></div>
+    <div class="header">
+      <button class="back-btn" onclick="irPara('home')">‹</button>
+      <h1>Conte com apoio</h1>
+    </div>
     <div class="content-list">
-      <div class="support-card"><div class="icon">👨‍👩‍👧</div><h3>Chamar um familiar</h3><p>Envie um resumo do que você está aprendendo ou peça ajuda para entender um produto financeiro.</p><button class="btn btn-primary" onclick="mostrarToast('Mensagem enviada para seu contato de confiança!')">Enviar resumo</button></div>
-      <div class="support-card"><div class="icon">📞</div><h3>Falar com alguém de confiança</h3><p>Tenha sempre o número de um filho, neto ou amigo próximo salvo e fácil de encontrar.</p><button class="btn btn-primary" onclick="mostrarToast('Abrindo contatos... (simulação)')">Ver contatos salvos</button></div>
-      <div class="support-card"><div class="icon">❓</div><h3>Dúvidas frequentes</h3><p>Respostas simples para as perguntas mais comuns sobre INSS, bancos e investimentos.</p><button class="btn btn-primary" onclick="irPara('aprender')">Ver perguntas</button></div>
+      <div class="support-card">
+        <span class="icon">👨‍👩‍👧</span>
+        <h3>Chamar um familiar</h3>
+        <p>Envie um resumo do que você está aprendendo ou peça ajuda para entender um produto financeiro.</p>
+        <button class="btn btn-primary" onclick="mostrarToast('Mensagem enviada para seu contato de confiança!')">Enviar resumo</button>
+      </div>
+      <div class="support-card">
+        <span class="icon">📞</span>
+        <h3>Falar com alguém de confiança</h3>
+        <p>Tenha sempre o número de um filho, neto ou amigo próximo salvo e fácil de encontrar.</p>
+        <button class="btn btn-primary" onclick="mostrarToast('Abrindo contatos... (simulação)')">Ver contatos salvos</button>
+      </div>
+      <div class="support-card">
+        <span class="icon">❓</span>
+        <h3>Dúvidas frequentes</h3>
+        <p>Respostas simples para as perguntas mais comuns sobre INSS, bancos e investimentos.</p>
+        <button class="btn btn-primary" onclick="irPara('aprender')">Ver perguntas</button>
+      </div>
     </div>
     <div class="bottom-nav">
       <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
@@ -183,16 +689,93 @@
 
   <script>
     const artigos = {
-      inss: { titulo: "Entendendo o INSS", html: `<span class="tag">Direitos básicos</span><h2>Como funciona a aposentadoria</h2><p>O INSS (Instituto Nacional do Seguro Social) é o órgão que paga a aposentadoria e outros benefícios para quem contribuiu durante a vida de trabalho.</p><p>Você tem direito a:</p><ul><li>Aposentadoria por idade ou por tempo de contribuição</li><li>Pensão por morte (para dependentes)</li><li>Auxílio-doença e salário-maternidade (em alguns casos)</li></ul><div class="highlight"><strong>Dica importante:</strong> Nunca passe seus dados do Meu INSS por telefone ou WhatsApp. Acesse sempre pelo site ou aplicativo oficial.</div><p>Se tiver dúvidas sobre o valor do benefício ou revisões, procure o INSS presencialmente ou pelo telefone 135 (ligação gratuita).</p>` },
-      poupanca: { titulo: "Além da Poupança", html: `<span class="tag">Educação financeira</span><h2>Por que a poupança sozinha não basta</h2><p>A caderneta de poupança é segura e fácil de usar. Porém, o rendimento dela costuma ficar abaixo da inflação. Isso significa que, com o tempo, o dinheiro perde poder de compra.</p><p>Exemplo simples: se a inflação sobe 5% no ano e a poupança rende 4%, você “perde” 1% do valor real do seu dinheiro.</p><div class="highlight">A educação financeira para idosos não busca “ficar rico”. O objetivo é <strong>proteger o que já foi construído</strong> e garantir autonomia.</div><p>Existem opções mais seguras e com melhor proteção contra a inflação, como o Tesouro IPCA+ e CDBs de bancos sólidos. Vamos falar sobre elas na seção “Investir”.</p>` },
-      produtos: { titulo: "Produtos que o banco oferece", html: `<span class="tag">Cuidado</span><h2>O que os gerentes costumam oferecer</h2><p>Muitos bancos e assessores empurram produtos que não são os melhores para o cliente. Os mais comuns:</p><ul><li><strong>Títulos de capitalização:</strong> não são investimento. O rendimento é baixo e o dinheiro fica preso.</li><li><strong>Crédito consignado:</strong> pode ser útil, mas a taxa de juros e o valor da parcela precisam ser bem avaliados.</li><li><strong>Previdência privada “empacotada”:</strong> nem sempre tem as melhores taxas.</li></ul><div class="highlight"><strong>Regra de ouro:</strong> se alguém estiver com pressa para você assinar, peça tempo. Nunca decida sob pressão.</div><p>Você tem o direito de perguntar, comparar e dizer “não”. O gerente trabalha para o banco; você precisa cuidar do seu dinheiro.</p>` },
-      linguagem: { titulo: "Linguagem do mercado", html: `<span class="tag">Vocabulário</span><h2>Palavras que você precisa conhecer</h2><p>O mercado financeiro usa palavras que parecem difíceis, mas o significado é simples:</p><ul><li><strong>Liquidez:</strong> facilidade de transformar o investimento em dinheiro na conta.</li><li><strong>Inflação:</strong> aumento geral dos preços. Faz o dinheiro “valer menos” com o tempo.</li><li><strong>Juros:</strong> o “aluguel” que você recebe (ou paga) pelo uso do dinheiro.</li><li><strong>Risco:</strong> chance de perder parte do valor investido.</li><li><strong>Dividendos:</strong> parte do lucro de uma empresa que é distribuída aos acionistas.</li></ul><div class="highlight">Não tenha vergonha de perguntar. Quem explica de forma clara está do seu lado. Quem complica demais pode estar tentando vender algo.</div>` },
-      renda: { titulo: "Geração de Renda Mensal", html: `<span class="tag">Investimentos</span><h2>Fundos Imobiliários e Ações de Dividendos</h2><p>Algumas aplicações podem gerar uma renda extra todo mês, sem você precisar vender o investimento.</p><p><strong>Fundos Imobiliários (FIIs):</strong> você compra cotas de imóveis (shoppings, galpões, prédios). Eles pagam aluguel mensal aos cotistas.</p><p><strong>Ações de Dividendos:</strong> empresas sólidas que distribuem parte do lucro regularmente.</p><div class="highlight">Esses investimentos têm risco de variação de preço. Por isso, só use dinheiro que você não precisa no curto prazo e, se possível, converse com um profissional certificado.</div><p>O importante é entender o básico antes de decidir. Nunca invista só porque alguém “garantiu” um retorno alto.</p>` },
-      inflacao: { titulo: "Proteção contra a Inflação", html: `<span class="tag">Tesouro Direto</span><h2>Tesouro IPCA+ com juros semestrais</h2><p>O Tesouro IPCA+ é um título do governo federal. Ele rende a inflação (IPCA) mais uma taxa fixa combinada na hora da compra.</p><p>Isso significa que o seu dinheiro <strong>não perde poder de compra</strong> com o tempo. E a cada semestre você recebe os juros na conta.</p><div class="highlight">É considerado um dos investimentos mais seguros do Brasil, porque o pagador é o próprio governo.</div><p>Você pode comprar pelo site ou aplicativo do Tesouro Direto, ou através do seu banco/corretora. Sempre confira se está no ambiente oficial.</p>` },
-      seguranca: { titulo: "Segurança e Liquidez", html: `<span class="tag">Reserva de emergência</span><h2>Tesouro Selic e CDBs de liquidez diária</h2><p>Para o dinheiro que você pode precisar a qualquer momento (reserva de emergência), o ideal é ter aplicações seguras e que liberem o valor rapidamente.</p><p><strong>Tesouro Selic:</strong> título do governo que acompanha a taxa Selic. É muito seguro e tem liquidez diária (você pode resgatar em dias úteis).</p><p><strong>CDBs de liquidez diária:</strong> oferecidos por bancos. Escolha bancos sólidos e com cobertura do FGC (Fundo Garantidor de Créditos) até R$ 250 mil por CPF e instituição.</p><div class="highlight">Esses produtos são ótimos para guardar a reserva de emergência. O rendimento costuma ser melhor que a poupança e o risco é baixo.</div>` }
+      inss: {
+        titulo: "Entendendo o INSS",
+        html: `<span class="tag">Direitos básicos</span>
+          <h2>Como funciona a aposentadoria</h2>
+          <p>O INSS (Instituto Nacional do Seguro Social) é o órgão que paga a aposentadoria e outros benefícios para quem contribuiu durante a vida de trabalho.</p>
+          <p>Você tem direito a:</p>
+          <ul>
+            <li>Aposentadoria por idade ou por tempo de contribuição</li>
+            <li>Pensão por morte (para dependentes)</li>
+            <li>Auxílio-doença e, em alguns casos, salário-maternidade</li>
+          </ul>
+          <div class="highlight"><strong>Dica importante:</strong> Nunca passe seus dados do Meu INSS por telefone ou WhatsApp. Acesse sempre pelo site ou aplicativo oficial.</div>
+          <p>Se tiver dúvidas sobre o valor do benefício ou revisões, procure o INSS presencialmente ou pelo telefone 135 (ligação gratuita).</p>`
+      },
+      poupanca: {
+        titulo: "Além da poupança",
+        html: `<span class="tag">Educação financeira</span>
+          <h2>Por que a poupança sozinha não basta</h2>
+          <p>A caderneta de poupança é segura e fácil de usar. Porém, o rendimento dela costuma ficar abaixo da inflação. Isso significa que, com o tempo, o dinheiro perde poder de compra.</p>
+          <p>Exemplo simples: se a inflação sobe 5% no ano e a poupança rende 4%, você “perde” 1% do valor real do seu dinheiro.</p>
+          <div class="highlight">A educação financeira para idosos não busca “ficar rico”. O objetivo é <strong>proteger o que já foi construído</strong> e garantir autonomia.</div>
+          <p>Existem opções mais seguras e com melhor proteção contra a inflação, como o Tesouro IPCA+ e CDBs de bancos sólidos. Falamos sobre elas na seção “Investir”.</p>`
+      },
+      produtos: {
+        titulo: "Produtos que o banco oferece",
+        html: `<span class="tag">Cuidado</span>
+          <h2>O que os gerentes costumam oferecer</h2>
+          <p>Muitos bancos e assessores empurram produtos que não são os melhores para o cliente. Os mais comuns:</p>
+          <ul>
+            <li><strong>Títulos de capitalização:</strong> não são investimento. O rendimento é baixo e o dinheiro fica preso.</li>
+            <li><strong>Crédito consignado:</strong> pode ser útil, mas a taxa de juros e o valor da parcela precisam ser bem avaliados.</li>
+            <li><strong>Previdência privada “empacotada”:</strong> nem sempre tem as melhores taxas.</li>
+          </ul>
+          <div class="highlight"><strong>Regra de ouro:</strong> se alguém estiver com pressa para você assinar, peça tempo. Nunca decida sob pressão.</div>
+          <p>Você tem o direito de perguntar, comparar e dizer “não”. O gerente trabalha para o banco; você precisa cuidar do seu dinheiro.</p>`
+      },
+      linguagem: {
+        titulo: "Palavras do mercado",
+        html: `<span class="tag">Vocabulário</span>
+          <h2>Palavras que você precisa conhecer</h2>
+          <p>O mercado financeiro usa palavras que parecem difíceis, mas o significado é simples:</p>
+          <ul>
+            <li><strong>Liquidez:</strong> facilidade de transformar o investimento em dinheiro na conta.</li>
+            <li><strong>Inflação:</strong> aumento geral dos preços. Faz o dinheiro “valer menos” com o tempo.</li>
+            <li><strong>Juros:</strong> o “aluguel” que você recebe (ou paga) pelo uso do dinheiro.</li>
+            <li><strong>Risco:</strong> chance de perder parte do valor investido.</li>
+            <li><strong>Dividendos:</strong> parte do lucro de uma empresa que é distribuída aos acionistas.</li>
+          </ul>
+          <div class="highlight">Não tenha vergonha de perguntar. Quem explica de forma clara está do seu lado. Quem complica demais pode estar tentando vender algo.</div>`
+      },
+      renda: {
+        titulo: "Renda todo mês",
+        html: `<span class="tag">Investimentos</span>
+          <h2>Fundos Imobiliários e ações que pagam dividendos</h2>
+          <p>Algumas aplicações podem gerar uma renda extra todo mês, sem você precisar vender o investimento.</p>
+          <p><strong>Fundos Imobiliários (FIIs):</strong> você compra cotas de imóveis (shoppings, galpões, prédios). Eles pagam aluguel mensal aos cotistas.</p>
+          <p><strong>Ações de dividendos:</strong> empresas sólidas que distribuem parte do lucro regularmente.</p>
+          <div class="highlight">Esses investimentos têm risco de variação de preço. Por isso, só use dinheiro que você não precisa no curto prazo e, se possível, converse com um profissional certificado.</div>
+          <p>O importante é entender o básico antes de decidir. Nunca invista só porque alguém “garantiu” um retorno alto.</p>`
+      },
+      inflacao: {
+        titulo: "Proteção contra a inflação",
+        html: `<span class="tag">Tesouro Direto</span>
+          <h2>Tesouro IPCA+ com juros a cada seis meses</h2>
+          <p>O Tesouro IPCA+ é um título do governo federal. Ele rende a inflação (IPCA) mais uma taxa fixa combinada na hora da compra.</p>
+          <p>Isso significa que o seu dinheiro <strong>não perde poder de compra</strong> com o tempo. E a cada semestre você recebe os juros na conta.</p>
+          <div class="highlight">É considerado um dos investimentos mais seguros do Brasil, porque o pagador é o próprio governo.</div>
+          <p>Você pode comprar pelo site ou aplicativo do Tesouro Direto, ou através do seu banco/corretora. Sempre confira se está no ambiente oficial.</p>`
+      },
+      seguranca: {
+        titulo: "Segurança e liquidez",
+        html: `<span class="tag">Reserva de emergência</span>
+          <h2>Tesouro Selic e CDBs de liquidez diária</h2>
+          <p>Para o dinheiro que você pode precisar a qualquer momento (reserva de emergência), o ideal é ter aplicações seguras e que liberem o valor rapidamente.</p>
+          <p><strong>Tesouro Selic:</strong> título do governo que acompanha a taxa Selic. É muito seguro e tem liquidez diária (você pode resgatar em dias úteis).</p>
+          <p><strong>CDBs de liquidez diária:</strong> oferecidos por bancos. Escolha bancos sólidos e com cobertura do FGC (Fundo Garantidor de Créditos) até R$ 250 mil por CPF e instituição.</p>
+          <div class="highlight">Esses produtos são ótimos para guardar a reserva de emergência. O rendimento costuma ser melhor que a poupança e o risco é baixo.</div>`
+      }
     };
+
     let paginaAnteriorArtigo = 'aprender';
-    function entrar() { document.getElementById('page-login').classList.remove('active'); document.getElementById('page-home').classList.add('active'); }
+
+    function entrar() {
+      document.getElementById('page-login').classList.remove('active');
+      document.getElementById('page-home').classList.add('active');
+    }
+
     function irPara(pagina) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       if (pagina === 'home') document.getElementById('page-home').classList.add('active');
@@ -201,8 +784,10 @@
       else if (pagina === 'investir') document.getElementById('page-investir').classList.add('active');
       else if (pagina === 'apoio') document.getElementById('page-apoio').classList.add('active');
     }
+
     function abrirArtigo(id) {
-      const art = artigos[id]; if (!art) return;
+      const art = artigos[id];
+      if (!art) return;
       if (document.getElementById('page-aprender').classList.contains('active')) paginaAnteriorArtigo = 'aprender';
       else if (document.getElementById('page-investir').classList.contains('active')) paginaAnteriorArtigo = 'investir';
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -210,14 +795,17 @@
       document.getElementById('artigo-titulo').textContent = art.titulo;
       document.getElementById('artigo-conteudo').innerHTML = art.html;
     }
+
     function voltarArtigo() {
       document.getElementById('page-artigo').classList.remove('active');
       if (paginaAnteriorArtigo === 'investir') document.getElementById('page-investir').classList.add('active');
       else document.getElementById('page-aprender').classList.add('active');
     }
+
     function mostrarToast(msg) {
       const t = document.getElementById('toast');
-      t.textContent = msg; t.classList.add('show');
+      t.textContent = msg;
+      t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 2500);
     }
   </script>
