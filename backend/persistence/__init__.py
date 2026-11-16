@@ -1,4 +1,4 @@
-from .database import Database
 from .repository import Repository
+from .supabase_client import get_supabase, supabase_ok
 
-__all__ = ["Database", "Repository"]
+__all__ = ["Repository", "get_supabase", "supabase_ok"]

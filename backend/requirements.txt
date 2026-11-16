@@ -1,5 +1,3 @@
 # Senior Help - Backend
-# Dependências mínimas para começar
-
-# Nenhuma dependência externa obrigatória no início.
-# Usamos apenas a biblioteca padrão do Python (sqlite3, json, datetime, dataclasses).
+supabase>=2.4.0
+python-dotenv>=1.0.0

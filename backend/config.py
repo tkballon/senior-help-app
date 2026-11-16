@@ -2,12 +2,17 @@
 Configurações do backend do Senior Help.
 """
 
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 
-# Banco de dados SQLite
+# --- Supabase ---
+SUPABASE_URL = os.getenv("SUPABASE_URL", "")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
+
 DATABASE_PATH = BASE_DIR / "db" / "senior_help.db"
+USE_SUPABASE = bool(SUPABASE_URL and SUPABASE_KEY)
 
 DIAS_ANTECEDENCIA_PADRAO = 5
 
@@ -18,7 +23,7 @@ CATEGORIAS_DESPESA = [
     "Contas",
     "Transporte",
     "Lazer",
-    "Outros"
+    "Outros",
 ]
 
 FREQUENCIAS = [
@@ -26,5 +31,5 @@ FREQUENCIAS = [
     "mensal",
     "bimestral",
     "trimestral",
-    "anual"
+    "anual",
 ]
