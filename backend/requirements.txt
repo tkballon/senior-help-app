@@ -1,0 +1,5 @@
+# Senior Help - Backend
+# Dependências mínimas para começar
+
+# Nenhuma dependência externa obrigatória no início.
+# Usamos apenas a biblioteca padrão do Python (sqlite3, json, datetime, dataclasses).
