@@ -3,427 +3,366 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Senior Help – Educação Financeira para Idosos</title>
+  <title>Senior Help</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+    :root {
+      --azul: #0A2540;
+      --azul-medio: #163A5F;
+      --dourado: #E9A825;
+      --dourado-claro: #F5D78E;
+      --fundo: #F4F6F9;
+      --branco: #FFFFFF;
+      --texto: #1C2430;
+      --texto-suave: #5A6577;
+      --borda: #E2E8F0;
+      --verde: #2E7D4F;
+      --vermelho: #C0392B;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: #eef2f6;
+      background: var(--fundo);
       min-height: 100vh;
       max-width: 480px;
       margin: 0 auto;
-      position: relative;
-      color: #1a1a1a;
+      color: var(--texto);
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== BARRA DE STATUS ===== */
-    .status-bar {
-      height: 28px;
-      background: #0a2540;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 16px;
-      color: white;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    /* ===== PÁGINAS ===== */
-    .page {
-      display: none;
-      flex-direction: column;
-      min-height: calc(100vh - 28px);
-      background: #eef2f6;
-    }
+    .page { display: none; flex-direction: column; min-height: 100vh; background: var(--fundo); }
     .page.active { display: flex; }
 
-    /* ===== LOGIN ===== */
-    .login-page {
-      background: linear-gradient(165deg, #0a2540 0%, #0d3b66 55%, #1a4a7a 100%);
-      color: white;
-      padding: 40px 22px 32px;
-      justify-content: center;
+    .entrada {
+      background: var(--azul);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 28px 40px;
       position: relative;
       overflow: hidden;
     }
-    .login-page::before {
+    .entrada::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(233,168,37,0.08) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04) 0%, transparent 35%);
-      pointer-events: none;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(233,168,37,0.12) 0%, transparent 70%);
+      top: -60px;
+      right: -80px;
     }
-    .login-logo { text-align: center; margin-bottom: 32px; position: relative; z-index: 1; }
-    .login-logo h1 {
-      font-size: 36px;
+    .entrada-topo { position: relative; z-index: 1; }
+    .entrada-marca {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dourado-claro);
+      margin-bottom: 28px;
+    }
+    .entrada h1 {
+      font-size: 38px;
       font-weight: 700;
-      margin-bottom: 12px;
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 16px;
       letter-spacing: -0.5px;
     }
-    .login-logo p {
+    .entrada .lead {
       font-size: 18px;
-      opacity: 0.95;
-      line-height: 1.5;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.55;
       max-width: 300px;
-      margin: 0 auto;
-      color: #f0d78c;
     }
-    .login-form {
-      background: white;
-      border-radius: 22px;
-      padding: 28px 24px;
-      color: #333;
+    .entrada-acoes {
       position: relative;
       z-index: 1;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .login-form h2 {
-      font-size: 24px;
-      margin-bottom: 8px;
-      color: #0a2540;
-    }
-    .login-form .subtitle {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 24px;
-      line-height: 1.4;
-    }
-    .input-group { margin-bottom: 18px; }
-    .input-group label {
-      display: block;
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #333;
-    }
-    .input-group input {
-      width: 100%;
-      padding: 18px 18px;
-      font-size: 18px;
-      border: 2px solid #dde3ea;
-      border-radius: 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .input-group input:focus { border-color: #0a2540; }
-
-    /* ===== BOTÕES ===== */
     .btn {
       display: block;
       width: 100%;
-      padding: 20px;
-      font-size: 19px;
+      padding: 18px 20px;
+      font-size: 18px;
       font-weight: 700;
       border: none;
       border-radius: 14px;
       cursor: pointer;
       text-align: center;
     }
-    .btn:active { opacity: 0.88; transform: scale(0.99); }
-    .btn-primary {
-      background: #0a2540;
+    .btn:active { opacity: 0.9; transform: scale(0.99); }
+    .btn-dourado {
+      background: var(--dourado);
+      color: var(--azul);
+    }
+    .btn-outline {
+      background: transparent;
       color: white;
-      margin-top: 8px;
+      border: 2px solid rgba(255,255,255,0.35);
     }
-    .btn-secondary {
-      background: #f0f3f7;
-      color: #333;
-      margin-top: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-weight: 600;
-      font-size: 17px;
-    }
-    .btn-gold {
-      background: #e9a825;
-      color: #0a2540;
-      margin-top: 12px;
-    }
-    .divider {
-      text-align: center;
-      margin: 20px 0;
-      color: #999;
-      font-size: 15px;
-      position: relative;
-    }
-    .divider::before, .divider::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 38%;
-      height: 1px;
-      background: #ddd;
-    }
-    .divider::before { left: 0; }
-    .divider::after { right: 0; }
-    .terms {
+    .entrada-rodape {
+      margin-top: 20px;
       font-size: 13px;
-      color: #777;
+      color: rgba(255,255,255,0.55);
       text-align: center;
-      margin-top: 18px;
-      line-height: 1.45;
-    }
-
-    /* ===== HEADER ===== */
-    .header {
-      background: #0a2540;
-      color: white;
-      padding: 18px 18px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 2px 12px rgba(10,37,64,0.25);
-    }
-    .header h1 {
-      font-size: 21px;
-      font-weight: 700;
-      flex: 1;
-      letter-spacing: -0.3px;
-    }
-    .header .back-btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 34px;
-      cursor: pointer;
-      padding: 0 8px;
-      line-height: 1;
-    }
-
-    /* ===== HOME ===== */
-    .home-content {
-      padding: 22px 18px;
-      flex: 1;
-      padding-bottom: 110px;
-    }
-    .welcome {
-      background: linear-gradient(135deg, #0a2540 0%, #1a4a7a 100%);
-      color: white;
-      border-radius: 20px;
-      padding: 28px 22px;
-      margin-bottom: 24px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(10,37,64,0.2);
-    }
-    .welcome::after {
-      content: "";
-      position: absolute;
-      top: -30px;
-      right: -30px;
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(233,168,37,0.18) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .welcome h2 {
-      font-size: 26px;
-      margin-bottom: 10px;
-      position: relative;
-    }
-    .welcome p {
-      font-size: 17px;
-      opacity: 0.95;
-      line-height: 1.5;
-      position: relative;
-    }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .menu-card {
-      background: white;
-      border-radius: 18px;
-      padding: 26px 14px 22px;
-      text-align: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-      cursor: pointer;
-      border: 1px solid rgba(10,37,64,0.04);
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .menu-card:active {
-      transform: scale(0.97);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .menu-card .icon {
-      font-size: 42px;
-      margin-bottom: 14px;
-      display: block;
-    }
-    .menu-card h3 {
-      font-size: 17px;
-      color: #0a2540;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-    .menu-card p {
-      font-size: 14px;
-      color: #555;
       line-height: 1.4;
     }
 
-    /* ===== LISTAS DE CONTEÚDO ===== */
-    .content-list {
-      padding: 18px 18px 120px;
-    }
-    .content-card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-      cursor: pointer;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      border: 1px solid rgba(10,37,64,0.04);
-    }
-    .content-card:active { background: #f5f8fb; }
-    .content-card .num {
-      background: #0a2540;
+    .header {
+      background: var(--azul);
       color: white;
-      width: 42px;
-      height: 42px;
+      padding: 18px 20px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      flex: 1;
+    }
+    .header .back {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      padding: 0 6px;
+      line-height: 1;
+    }
+
+    .conteudo {
+      padding: 20px 18px 110px;
+      flex: 1;
+    }
+
+    .saudacao {
+      background: var(--azul);
+      color: white;
+      border-radius: 18px;
+      padding: 24px 22px;
+      margin-bottom: 20px;
+    }
+    .saudacao h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .saudacao p {
+      font-size: 16px;
+      opacity: 0.9;
+      line-height: 1.45;
+    }
+
+    .grade {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .card-menu {
+      background: var(--branco);
+      border-radius: 16px;
+      padding: 22px 14px 18px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(10,37,64,0.06);
+      cursor: pointer;
+      border: 1px solid var(--borda);
+    }
+    .card-menu:active { transform: scale(0.98); }
+    .card-menu .icone {
+      font-size: 36px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .card-menu h3 {
+      font-size: 16px;
+      color: var(--azul);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .card-menu p {
+      font-size: 13px;
+      color: var(--texto-suave);
+      line-height: 1.35;
+    }
+
+    .aviso {
+      background: #FFF8E8;
+      border: 1px solid rgba(233,168,37,0.35);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--texto-suave);
+      line-height: 1.5;
+      margin-top: 18px;
+    }
+    .aviso strong { color: var(--azul); }
+
+    .item {
+      background: var(--branco);
+      border-radius: 14px;
+      padding: 18px 16px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid var(--borda);
+      cursor: pointer;
+    }
+    .item:active { background: #f8fafc; }
+    .item .num {
+      background: var(--azul);
+      color: white;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 17px;
+      font-size: 16px;
       flex-shrink: 0;
     }
-    .content-card h3 {
-      font-size: 17px;
-      color: #0a2540;
-      margin-bottom: 5px;
+    .item h3 {
+      font-size: 16px;
+      color: var(--azul);
+      margin-bottom: 4px;
       font-weight: 700;
     }
-    .content-card p {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.45;
+    .item p {
+      font-size: 14px;
+      color: var(--texto-suave);
+      line-height: 1.4;
     }
 
-    /* ===== ARTIGO ===== */
-    .article {
-      padding: 22px 22px 60px;
-      background: white;
+    .artigo {
+      padding: 22px 22px 50px;
+      background: var(--branco);
       flex: 1;
     }
-    .article h2 {
-      font-size: 24px;
-      color: #0a2540;
-      margin-bottom: 12px;
+    .artigo h2 {
+      font-size: 22px;
+      color: var(--azul);
+      margin-bottom: 14px;
       line-height: 1.3;
     }
-    .article .tag {
+    .artigo .tag {
       display: inline-block;
-      background: #e8f0fe;
-      color: #0a2540;
-      font-size: 14px;
+      background: #E8F0FE;
+      color: var(--azul);
+      font-size: 13px;
       font-weight: 600;
-      padding: 6px 16px;
+      padding: 5px 12px;
       border-radius: 20px;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
-    .article p {
-      font-size: 18px;
-      line-height: 1.7;
-      color: #333;
-      margin-bottom: 18px;
-    }
-    .article .highlight {
-      background: #fff8e6;
-      border-left: 5px solid #e9a825;
-      padding: 18px 20px;
-      border-radius: 0 14px 14px 0;
-      margin: 22px 0;
+    .artigo p {
       font-size: 17px;
+      line-height: 1.65;
+      color: var(--texto);
+      margin-bottom: 16px;
+    }
+    .artigo .destaque {
+      background: #FFF8E8;
+      border-left: 4px solid var(--dourado);
+      padding: 16px 18px;
+      border-radius: 0 12px 12px 0;
+      margin: 18px 0;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #3d4450;
+    }
+    .artigo ul { margin: 8px 0 16px 22px; }
+    .artigo li {
+      font-size: 16px;
       line-height: 1.55;
-      color: #444;
-    }
-    .article ul {
-      margin: 12px 0 20px 24px;
-    }
-    .article li {
-      font-size: 17px;
-      line-height: 1.6;
-      margin-bottom: 12px;
-      color: #333;
+      margin-bottom: 10px;
+      color: var(--texto);
     }
 
-    /* ===== DICAS DE PROTEÇÃO ===== */
-    .tip-card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px 18px 20px 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-      border-left: 6px solid #c0392b;
+    .dica {
+      background: var(--branco);
+      border-radius: 14px;
+      padding: 18px 16px;
+      margin-bottom: 12px;
+      border-left: 5px solid var(--vermelho);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
-    .tip-card.green { border-left-color: #27ae60; }
-    .tip-card.blue { border-left-color: #2980b9; }
-    .tip-card.gold { border-left-color: #e9a825; }
-    .tip-card h3 {
-      font-size: 17px;
-      color: #0a2540;
-      margin-bottom: 10px;
+    .dica.verde { border-left-color: var(--verde); }
+    .dica.azul { border-left-color: #2980b9; }
+    .dica.ouro { border-left-color: var(--dourado); }
+    .dica h3 {
+      font-size: 16px;
+      color: var(--azul);
+      margin-bottom: 8px;
       font-weight: 700;
     }
-    .tip-card p {
-      font-size: 16px;
+    .dica p {
+      font-size: 15px;
       color: #444;
-      line-height: 1.55;
-    }
-
-    /* ===== APOIO ===== */
-    .support-card {
-      background: white;
-      border-radius: 18px;
-      padding: 26px 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-    .support-card .icon {
-      font-size: 48px;
-      margin-bottom: 14px;
-      display: block;
-    }
-    .support-card h3 {
-      font-size: 20px;
-      color: #0a2540;
-      margin-bottom: 10px;
-    }
-    .support-card p {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 20px;
       line-height: 1.5;
     }
 
-    /* ===== NAVEGAÇÃO INFERIOR ===== */
-    .bottom-nav {
+    .bloco {
+      background: var(--branco);
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 14px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid var(--borda);
+    }
+    .bloco .icone { font-size: 40px; margin-bottom: 12px; display: block; }
+    .bloco h3 {
+      font-size: 18px;
+      color: var(--azul);
+      margin-bottom: 8px;
+    }
+    .bloco p {
+      font-size: 15px;
+      color: var(--texto-suave);
+      margin-bottom: 16px;
+      line-height: 1.45;
+    }
+    .btn-azul {
+      background: var(--azul);
+      color: white;
+    }
+    .faq {
+      text-align: left;
+      background: var(--fundo);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+    .faq h4 {
+      font-size: 15px;
+      color: var(--azul);
+      margin-bottom: 6px;
+    }
+    .faq p {
+      font-size: 14px;
+      color: var(--texto-suave);
+      margin-bottom: 0;
+    }
+
+    .nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       max-width: 480px;
       margin: 0 auto;
-      background: white;
-      border-top: 1px solid #e4e8ee;
+      background: var(--branco);
+      border-top: 1px solid var(--borda);
       display: flex;
-      padding: 10px 0 16px;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+      padding: 8px 0 14px;
+      box-shadow: 0 -3px 16px rgba(0,0,0,0.05);
       z-index: 20;
     }
     .nav-item {
@@ -431,332 +370,274 @@
       text-align: center;
       padding: 6px 0;
       cursor: pointer;
-      color: #999;
-      font-size: 12px;
+      color: #9aa3b2;
+      font-size: 11px;
       font-weight: 600;
     }
-    .nav-item.active { color: #0a2540; }
-    .nav-item .nav-icon {
-      font-size: 24px;
+    .nav-item.ativo { color: var(--azul); }
+    .nav-item .ni {
+      font-size: 22px;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
-    /* ===== TOAST ===== */
     .toast {
       position: fixed;
-      bottom: 100px;
+      bottom: 95px;
       left: 18px;
       right: 18px;
       max-width: 444px;
       margin: 0 auto;
-      background: #0a2540;
+      background: var(--azul);
       color: white;
-      padding: 18px 22px;
-      border-radius: 14px;
-      font-size: 17px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 16px;
       text-align: center;
       opacity: 0;
-      transform: translateY(16px);
-      transition: all 0.3s;
+      transform: translateY(12px);
+      transition: all 0.25s;
       z-index: 50;
       pointer-events: none;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
     .toast.show {
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* ===== AVISO OBRIGATÓRIO ===== */
-    .disclaimer {
-      background: #fff8e6;
-      border-radius: 14px;
-      padding: 16px 18px;
-      font-size: 14px;
-      color: #555;
-      line-height: 1.5;
-      margin-top: 20px;
-      border: 1px solid rgba(233,168,37,0.3);
-    }
-    .disclaimer strong { color: #0a2540; }
-
-    /* ===== FAQ ===== */
-    .faq-item {
-      background: white;
-      border-radius: 14px;
-      padding: 18px 18px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-    .faq-item h4 {
-      font-size: 16px;
-      color: #0a2540;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-    .faq-item p {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.5;
-    }
   </style>
 </head>
 <body>
-  <div class="status-bar">
-    <span>9:41</span>
-    <span>📶 🔋</span>
-  </div>
 
-  <!-- ==================== LOGIN ==================== -->
-  <div class="page login-page active" id="page-login">
-    <div class="login-logo">
-      <h1>Senior Help</h1>
-      <p>“Um app que busca tranquilizar sua carteira...”</p>
+  <div class="page entrada active" id="page-entrada">
+    <div class="entrada-topo">
+      <div class="entrada-marca">Senior Help</div>
+      <h1>Organizar o dinheiro com mais calma</h1>
+      <p class="lead">Conteúdos claros sobre INSS, contas e cuidados com golpes. Feito para ler com a família.</p>
     </div>
-    <div class="login-form">
-      <h2>Criar uma conta</h2>
-      <p class="subtitle">Digite seu e-mail para começar a usar o aplicativo</p>
-      <div class="input-group">
-        <label>E-mail</label>
-        <input type="email" id="email" placeholder="seu.email@exemplo.com" value="maria.silva@email.com">
-      </div>
-      <button class="btn btn-primary" onclick="entrar()">Continuar</button>
-      <div class="divider">ou</div>
-      <button class="btn btn-secondary" onclick="entrar()">Continuar com o Google</button>
-      <button class="btn btn-secondary" onclick="entrar()">Continuar com a Apple</button>
-      <p class="terms">Ao continuar, você concorda com nossos Termos de Serviço e com a Política de Privacidade. Este app é apenas educativo.</p>
+    <div class="entrada-acoes">
+      <button class="btn btn-dourado" onclick="irPara('home')">Entrar</button>
+      <button class="btn btn-outline" onclick="irPara('home')">Continuar sem conta</button>
+      <p class="entrada-rodape">Conteúdo educativo. Não substitui orientação profissional.</p>
     </div>
   </div>
 
-  <!-- ==================== HOME ==================== -->
   <div class="page" id="page-home">
     <div class="header"><h1>Senior Help</h1></div>
-    <div class="home-content">
-      <div class="welcome">
-        <h2>Olá, Maria!</h2>
-        <p>Bem-vinda. Vamos cuidar juntos do seu dinheiro, com segurança e tranquilidade.</p>
+    <div class="conteudo">
+      <div class="saudacao">
+        <h2>Olá</h2>
+        <p>Escolha um tema para começar. Tudo em linguagem simples.</p>
       </div>
-      <div class="menu-grid">
-        <div class="menu-card" onclick="irPara('aprender')">
-          <span class="icon">📚</span>
-          <h3>Aprenda</h3>
-          <p>Textos claros sobre dinheiro e INSS</p>
+      <div class="grade">
+        <div class="card-menu" onclick="irPara('aprender')">
+          <span class="icone">📚</span>
+          <h3>Aprender</h3>
+          <p>INSS e dinheiro no dia a dia</p>
         </div>
-        <div class="menu-card" onclick="irPara('proteja')">
-          <span class="icon">🛡️</span>
-          <h3>Proteja</h3>
-          <p>Dicas para evitar golpes</p>
+        <div class="card-menu" onclick="irPara('proteja')">
+          <span class="icone">🛡️</span>
+          <h3>Proteger</h3>
+          <p>Golpes e pressões comuns</p>
         </div>
-        <div class="menu-card" onclick="irPara('investir')">
-          <span class="icon">💰</span>
-          <h3>Investir</h3>
-          <p>Opções mais seguras para a velhice</p>
+        <div class="card-menu" onclick="irPara('investir')">
+          <span class="icone">💰</span>
+          <h3>Guardar</h3>
+          <p>Opções mais conservadoras</p>
         </div>
-        <div class="menu-card" onclick="irPara('apoio')">
-          <span class="icon">🤝</span>
+        <div class="card-menu" onclick="irPara('apoio')">
+          <span class="icone">🤝</span>
           <h3>Apoio</h3>
-          <p>Peça ajuda a quem você confia</p>
+          <p>Família e telefones úteis</p>
         </div>
       </div>
-      <div class="disclaimer">
-        <strong>Aviso importante:</strong> Este app é só para educação. Ele não substitui a orientação de profissionais certificados (CVM / Banco Central). A decisão final é sempre sua.
+      <div class="aviso">
+        <strong>Importante:</strong> este material é educativo. A decisão final é sempre sua.
       </div>
     </div>
-    <div class="bottom-nav">
-      <div class="nav-item active" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-      <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-      <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-      <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    <div class="nav">
+      <div class="nav-item ativo" onclick="irPara('home')"><span class="ni">🏠</span>Início</div>
+      <div class="nav-item" onclick="irPara('aprender')"><span class="ni">📚</span>Aprender</div>
+      <div class="nav-item" onclick="irPara('proteja')"><span class="ni">🛡️</span>Proteger</div>
+      <div class="nav-item" onclick="irPara('apoio')"><span class="ni">🤝</span>Apoio</div>
     </div>
   </div>
 
-  <!-- ==================== APRENDER ==================== -->
   <div class="page" id="page-aprender">
     <div class="header">
-      <button class="back-btn" onclick="irPara('home')">‹</button>
-      <h1>Aprenda com facilidade</h1>
+      <button class="back" onclick="irPara('home')">‹</button>
+      <h1>Aprender</h1>
     </div>
-    <div class="content-list">
-      <div class="content-card" onclick="abrirArtigo('inss')">
+    <div class="conteudo">
+      <div class="item" onclick="abrirArtigo('inss')">
         <div class="num">1</div>
         <div>
-          <h3>Entendendo o INSS</h3>
-          <p>Como funciona a aposentadoria e seus direitos básicos.</p>
+          <h3>INSS</h3>
+          <p>Como funciona a aposentadoria e o que observar.</p>
         </div>
       </div>
-      <div class="content-card" onclick="abrirArtigo('poupanca')">
+      <div class="item" onclick="abrirArtigo('poupanca')">
         <div class="num">2</div>
         <div>
-          <h3>Além da poupança</h3>
-          <p>Por que a poupança sozinha não protege o dinheiro da inflação.</p>
+          <h3>Poupança e inflação</h3>
+          <p>Por que o rendimento da poupança pode perder para a inflação.</p>
         </div>
       </div>
-      <div class="content-card" onclick="abrirArtigo('produtos')">
+      <div class="item" onclick="abrirArtigo('produtos')">
         <div class="num">3</div>
         <div>
-          <h3>Produtos que o banco oferece</h3>
-          <p>Cuidado com títulos de capitalização e empréstimos consignados.</p>
+          <h3>Produtos do banco</h3>
+          <p>Capitalização, consignado e o que costuma ser oferecido.</p>
         </div>
       </div>
-      <div class="content-card" onclick="abrirArtigo('linguagem')">
+      <div class="item" onclick="abrirArtigo('linguagem')">
         <div class="num">4</div>
         <div>
-          <h3>Palavras do dia a dia do mercado</h3>
-          <p>O que significam termos que os bancos costumam usar.</p>
+          <h3>Palavras do mercado</h3>
+          <p>Liquidez, juros, risco e dividendos em linguagem direta.</p>
         </div>
       </div>
-      <div class="disclaimer">
-        <strong>Aviso:</strong> Todo conteúdo é educativo. A decisão final é sempre sua.
-      </div>
+      <div class="aviso"><strong>Lembrete:</strong> leia com calma. Em dúvida, converse com alguém de confiança.</div>
     </div>
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-      <div class="nav-item active" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-      <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-      <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    <div class="nav">
+      <div class="nav-item" onclick="irPara('home')"><span class="ni">🏠</span>Início</div>
+      <div class="nav-item ativo" onclick="irPara('aprender')"><span class="ni">📚</span>Aprender</div>
+      <div class="nav-item" onclick="irPara('proteja')"><span class="ni">🛡️</span>Proteger</div>
+      <div class="nav-item" onclick="irPara('apoio')"><span class="ni">🤝</span>Apoio</div>
     </div>
   </div>
 
-  <!-- ==================== ARTIGO ==================== -->
   <div class="page" id="page-artigo">
     <div class="header">
-      <button class="back-btn" onclick="voltarArtigo()">‹</button>
+      <button class="back" onclick="voltarArtigo()">‹</button>
       <h1 id="artigo-titulo">Artigo</h1>
     </div>
-    <div class="article" id="artigo-conteudo"></div>
+    <div class="artigo" id="artigo-conteudo"></div>
   </div>
 
-  <!-- ==================== PROTEJA ==================== -->
   <div class="page" id="page-proteja">
     <div class="header">
-      <button class="back-btn" onclick="irPara('home')">‹</button>
-      <h1>Proteja seu dinheiro</h1>
+      <button class="back" onclick="irPara('home')">‹</button>
+      <h1>Proteger</h1>
     </div>
-    <div class="content-list">
-      <div class="tip-card">
-        <h3>🚨 Kit Fraude e assédio comercial</h3>
-        <p>Nunca aceite propostas de “empréstimo fácil” ou “investimento garantido” feitas por telefone ou WhatsApp. Banco de verdade não liga pedindo senha ou dados do cartão.</p>
+    <div class="conteudo">
+      <div class="dica">
+        <h3>Ligações e mensagens suspeitas</h3>
+        <p>Não aceite proposta de empréstimo ou investimento fácil por telefone ou WhatsApp. Banco não pede senha por mensagem.</p>
       </div>
-      <div class="tip-card green">
-        <h3>✅ Pressão da família</h3>
-        <p>Se um parente pedir dinheiro emprestado ou para “investir juntos”, peça tempo para pensar. Converse com outra pessoa de confiança antes de decidir.</p>
+      <div class="dica verde">
+        <h3>Pressão de parentes</h3>
+        <p>Se pedirem dinheiro ou “investimento em conjunto”, peça tempo. Converse com outra pessoa antes de decidir.</p>
       </div>
-      <div class="tip-card blue">
-        <h3>📱 Golpes na internet</h3>
-        <p>Desconfie de links enviados por SMS ou e-mail. O INSS e os bancos nunca pedem dados por mensagem. Em caso de dúvida, ligue você mesmo no número oficial.</p>
+      <div class="dica azul">
+        <h3>Links e e-mails</h3>
+        <p>Desconfie de links. Em caso de dúvida, ligue você mesmo no número oficial do banco ou do INSS (135).</p>
       </div>
-      <div class="tip-card gold">
-        <h3>🏦 Títulos de capitalização</h3>
-        <p>Muitos gerentes oferecem títulos de capitalização como se fossem investimento. Eles não são. O rendimento é baixo e o dinheiro fica preso por anos.</p>
+      <div class="dica ouro">
+        <h3>Título de capitalização</h3>
+        <p>Não é investimento. Rendimento baixo e dinheiro preso por anos. Pergunte sempre o que acontece se precisar resgatar antes.</p>
       </div>
-      <div class="tip-card green">
-        <h3>🔒 Crédito consignado</h3>
-        <p>Só contrate se realmente precisar. Veja a taxa de juros e o valor da parcela. Nunca assine nada sem ler com calma ou com a ajuda de alguém de confiança.</p>
+      <div class="dica verde">
+        <h3>Crédito consignado</h3>
+        <p>Só se realmente precisar. Veja a taxa e o valor da parcela. Não assine com pressa.</p>
       </div>
-      <div class="disclaimer">
-        <strong>Aviso:</strong> Este app não realiza investimentos nem solicita dados bancários. Em caso de golpe, procure a polícia e o Procon.
-      </div>
+      <div class="aviso"><strong>Em caso de golpe:</strong> registre boletim de ocorrência e procure o Procon (151).</div>
     </div>
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-      <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-      <div class="nav-item active" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-      <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    <div class="nav">
+      <div class="nav-item" onclick="irPara('home')"><span class="ni">🏠</span>Início</div>
+      <div class="nav-item" onclick="irPara('aprender')"><span class="ni">📚</span>Aprender</div>
+      <div class="nav-item ativo" onclick="irPara('proteja')"><span class="ni">🛡️</span>Proteger</div>
+      <div class="nav-item" onclick="irPara('apoio')"><span class="ni">🤝</span>Apoio</div>
     </div>
   </div>
 
-  <!-- ==================== INVESTIR ==================== -->
   <div class="page" id="page-investir">
     <div class="header">
-      <button class="back-btn" onclick="irPara('home')">‹</button>
-      <h1>Opções mais seguras</h1>
+      <button class="back" onclick="irPara('home')">‹</button>
+      <h1>Guardar</h1>
     </div>
-    <div class="content-list">
-      <div class="content-card" onclick="abrirArtigo('renda')">
-        <div class="num">📈</div>
+    <div class="conteudo">
+      <div class="item" onclick="abrirArtigo('renda')">
+        <div class="num">1</div>
         <div>
-          <h3>Renda todo mês</h3>
-          <p>Fundos Imobiliários e ações que pagam dividendos – explicados de forma simples.</p>
+          <h3>Renda periódica</h3>
+          <p>Fundos imobiliários e dividendos — o conceito, sem recomendação.</p>
         </div>
       </div>
-      <div class="content-card" onclick="abrirArtigo('inflacao')">
-        <div class="num">🛡️</div>
+      <div class="item" onclick="abrirArtigo('inflacao')">
+        <div class="num">2</div>
         <div>
-          <h3>Proteção contra a inflação</h3>
-          <p>Tesouro IPCA+ com juros a cada seis meses – o que é e por que importa.</p>
+          <h3>Acompanhar a inflação</h3>
+          <p>Tesouro IPCA+ e por que isso aparece nas conversas sobre aposentadoria.</p>
         </div>
       </div>
-      <div class="content-card" onclick="abrirArtigo('seguranca')">
-        <div class="num">🔒</div>
+      <div class="item" onclick="abrirArtigo('seguranca')">
+        <div class="num">3</div>
         <div>
-          <h3>Segurança e liquidez</h3>
-          <p>Tesouro Selic e CDBs de liquidez diária – bons para a reserva de emergência.</p>
+          <h3>Reserva de emergência</h3>
+          <p>Tesouro Selic e CDBs de liquidez diária, explicados de forma direta.</p>
         </div>
       </div>
-      <div class="disclaimer">
-        <strong>Aviso importante:</strong> Este conteúdo é apenas educativo. Não é recomendação de investimento. Procure um profissional certificado antes de aplicar seu dinheiro.
+      <div class="aviso">
+        <strong>Importante:</strong> aqui só explicamos conceitos. Não há recomendação de produto. Em dúvida, fale com profissional certificado.
       </div>
     </div>
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-      <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-      <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-      <div class="nav-item" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    <div class="nav">
+      <div class="nav-item" onclick="irPara('home')"><span class="ni">🏠</span>Início</div>
+      <div class="nav-item" onclick="irPara('aprender')"><span class="ni">📚</span>Aprender</div>
+      <div class="nav-item" onclick="irPara('proteja')"><span class="ni">🛡️</span>Proteger</div>
+      <div class="nav-item" onclick="irPara('apoio')"><span class="ni">🤝</span>Apoio</div>
     </div>
   </div>
 
-  <!-- ==================== APOIO ==================== -->
   <div class="page" id="page-apoio">
     <div class="header">
-      <button class="back-btn" onclick="irPara('home')">‹</button>
-      <h1>Conte com apoio</h1>
+      <button class="back" onclick="irPara('home')">‹</button>
+      <h1>Apoio</h1>
     </div>
-    <div class="content-list">
-      <div class="support-card">
-        <span class="icon">👨‍👩‍👧</span>
-        <h3>Falar com a família</h3>
-        <p>Peça ajuda a um filho, neto ou pessoa de confiança antes de tomar decisões importantes sobre dinheiro.</p>
-        <button class="btn btn-primary" onclick="mostrarToast('Ótimo! Converse com alguém de confiança antes de decidir.')">Quero conversar com alguém</button>
+    <div class="conteudo">
+      <div class="bloco">
+        <span class="icone">👨‍👩‍👧</span>
+        <h3>Conversar com a família</h3>
+        <p>Antes de qualquer decisão grande, fale com alguém de confiança.</p>
+        <button class="btn btn-azul" onclick="mostrarToast('Anote o que ficou combinado e, se puder, leve alguém na conversa.')">Registrar que vou conversar</button>
       </div>
 
-      <div class="support-card">
-        <span class="icon">📞</span>
-        <h3>Telefones úteis</h3>
-        <p style="text-align:left; padding: 0 8px;">
+      <div class="bloco">
+        <span class="icone">📞</span>
+        <h3>Telefones</h3>
+        <p style="text-align:left; padding: 0 6px;">
           <strong>INSS:</strong> 135<br>
           <strong>Procon:</strong> 151<br>
-          <strong>Polícia:</strong> 190<br>
-          <strong>Central de Atendimento ao Consumidor:</strong> 0800
+          <strong>Polícia:</strong> 190
         </p>
       </div>
 
-      <div class="support-card">
-        <span class="icon">❓</span>
-        <h3>Dúvidas frequentes</h3>
-        <div class="faq-item" style="text-align:left; margin-top:12px;">
+      <div class="bloco">
+        <span class="icone">❓</span>
+        <h3>Perguntas comuns</h3>
+        <div class="faq">
           <h4>O app pede senha do banco?</h4>
-          <p>Não. Nunca pedimos senha, dados bancários ou informações do Meu INSS.</p>
+          <p>Não. Não pedimos senha, dados bancários nem acesso ao Meu INSS.</p>
         </div>
-        <div class="faq-item" style="text-align:left;">
-          <h4>Posso investir pelo app?</h4>
-          <p>Não. O Senior Help é apenas educativo. Não realiza investimentos.</p>
+        <div class="faq">
+          <h4>Dá para investir por aqui?</h4>
+          <p>Não. Só há conteúdo educativo.</p>
         </div>
-        <div class="faq-item" style="text-align:left;">
-          <h4>Quem deve usar este app?</h4>
-          <p>Idosos e também filhos e netos que desejam ajudar os mais velhos a entender melhor o dinheiro.</p>
+        <div class="faq">
+          <h4>Para quem é?</h4>
+          <p>Para idosos e para filhos e netos que acompanham as decisões financeiras da família.</p>
         </div>
       </div>
 
-      <div class="disclaimer">
-        <strong>Aviso:</strong> Em caso de dúvida ou suspeita de golpe, procure imediatamente alguém de confiança e os órgãos oficiais (INSS 135 / Procon 151).
+      <div class="aviso">
+        <strong>Em caso de dúvida ou suspeita de golpe:</strong> fale com alguém de confiança e use os canais oficiais (INSS 135 / Procon 151).
       </div>
     </div>
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="irPara('home')"><span class="nav-icon">🏠</span>Início</div>
-      <div class="nav-item" onclick="irPara('aprender')"><span class="nav-icon">📚</span>Aprenda</div>
-      <div class="nav-item" onclick="irPara('proteja')"><span class="nav-icon">🛡️</span>Proteja</div>
-      <div class="nav-item active" onclick="irPara('apoio')"><span class="nav-icon">🤝</span>Apoio</div>
+    <div class="nav">
+      <div class="nav-item" onclick="irPara('home')"><span class="ni">🏠</span>Início</div>
+      <div class="nav-item" onclick="irPara('aprender')"><span class="ni">📚</span>Aprender</div>
+      <div class="nav-item" onclick="irPara('proteja')"><span class="ni">🛡️</span>Proteger</div>
+      <div class="nav-item ativo" onclick="irPara('apoio')"><span class="ni">🤝</span>Apoio</div>
     </div>
   </div>
 
@@ -765,105 +646,94 @@
   <script>
     const artigos = {
       inss: {
-        titulo: "Entendendo o INSS",
+        titulo: "INSS",
         html: `<span class="tag">Direitos</span>
           <h2>Como funciona a aposentadoria</h2>
-          <p>O INSS é o Instituto Nacional do Seguro Social. É ele que paga a aposentadoria da maioria dos brasileiros.</p>
-          <p>Todo mês, uma parte do seu salário (ou contribuição) vai para o INSS. Depois de muitos anos de contribuição, você tem direito a receber um valor todo mês.</p>
-          <div class="highlight"><strong>Dica importante:</strong> Guarde seus documentos e o número do benefício. Em caso de dúvida, ligue para o 135 (ligação gratuita).</div>
-          <p>Nunca compartilhe senha do Meu INSS com desconhecidos. O INSS não liga pedindo dados bancários ou senha.</p>
-          <p>Se alguém disser que pode “agilizar” seu benefício ou que você precisa pagar uma taxa, desconfie. Procure o canal oficial.</p>`
+          <p>O INSS paga a aposentadoria da maior parte dos trabalhadores no Brasil. A contribuição mensal ao longo dos anos gera o direito ao benefício.</p>
+          <div class="destaque"><strong>Na prática:</strong> guarde o número do benefício e os documentos. Em dúvida, ligue 135 (gratuito).</div>
+          <p>O INSS não liga pedindo senha ou dados do cartão. Se alguém disser que precisa de taxa para “agilizar” o benefício, desconfie e use o canal oficial.</p>`
       },
       poupanca: {
-        titulo: "Além da poupança",
-        html: `<span class="tag">Educação</span>
-          <h2>Por que a poupança sozinha não basta</h2>
-          <p>A poupança é segura e fácil de usar. Muita gente gosta dela por isso. Porém, o rendimento da poupança costuma ser menor que a inflação.</p>
-          <p>Isso significa que, com o tempo, o dinheiro na poupança pode comprar menos coisas do que comprava antes.</p>
-          <div class="highlight"><strong>Exemplo simples:</strong> Se a inflação sobe 5% no ano e a poupança rende 4%, na prática você perdeu poder de compra.</div>
-          <p>Por isso é importante conhecer outras opções mais seguras, como o Tesouro Selic e alguns CDBs de liquidez diária. Eles também são seguros e geralmente rendem um pouco mais.</p>
-          <p>O objetivo não é ficar rico. É proteger o que você já construiu.</p>`
+        titulo: "Poupança e inflação",
+        html: `<span class="tag">Conceito</span>
+          <h2>Quando a poupança perde poder de compra</h2>
+          <p>A poupança é segura e simples. Porém, se a inflação sobe mais que o rendimento, o dinheiro compra menos com o tempo.</p>
+          <div class="destaque"><strong>Exemplo:</strong> inflação de 5% no ano e rendimento de 4% na poupança → na prática, perdeu poder de compra.</div>
+          <p>Por isso muitas pessoas olham também opções como Tesouro Selic e alguns CDBs de liquidez diária. O ponto aqui é só entender o conceito, não escolher produto.</p>`
       },
       produtos: {
-        titulo: "Produtos que o banco oferece",
-        html: `<span class="tag">Cuidado</span>
-          <h2>O que os gerentes costumam oferecer</h2>
-          <p>Muitos bancos e assessores empurram produtos que não são os melhores para o cliente. Os mais comuns:</p>
+        titulo: "Produtos do banco",
+        html: `<span class="tag">Atenção</span>
+          <h2>O que costuma ser oferecido</h2>
           <ul>
-            <li><strong>Títulos de capitalização:</strong> não são investimento. O rendimento é baixo e o dinheiro fica preso.</li>
-            <li><strong>Crédito consignado:</strong> pode ser útil, mas a taxa de juros e o valor da parcela precisam ser bem avaliados.</li>
-            <li><strong>Previdência privada “empacotada”:</strong> nem sempre tem as melhores taxas.</li>
+            <li><strong>Título de capitalização:</strong> não é investimento. Rendimento baixo e prazo longo de carência.</li>
+            <li><strong>Crédito consignado:</strong> pode ser útil, mas a taxa e a parcela precisam ser olhadas com calma.</li>
+            <li><strong>Previdência “empacotada”:</strong> nem sempre tem as melhores condições. Peça comparação.</li>
           </ul>
-          <div class="highlight"><strong>Regra de ouro:</strong> se alguém estiver com pressa para você assinar, peça tempo. Nunca decida sob pressão.</div>
-          <p>Você tem o direito de perguntar, comparar e dizer “não”. O gerente trabalha para o banco; você precisa cuidar do seu dinheiro.</p>`
+          <div class="destaque"><strong>Regra prática:</strong> se houver pressa para assinar, peça tempo. Decisão sob pressão costuma sair cara.</div>`
       },
       linguagem: {
         titulo: "Palavras do mercado",
         html: `<span class="tag">Vocabulário</span>
-          <h2>Palavras que você precisa conhecer</h2>
-          <p>O mercado financeiro usa palavras que parecem difíceis, mas o significado é simples:</p>
+          <h2>Termos que aparecem com frequência</h2>
           <ul>
-            <li><strong>Liquidez:</strong> facilidade de transformar o investimento em dinheiro na conta.</li>
-            <li><strong>Inflação:</strong> aumento geral dos preços. Faz o dinheiro “valer menos” com o tempo.</li>
-            <li><strong>Juros:</strong> o “aluguel” que você recebe (ou paga) pelo uso do dinheiro.</li>
-            <li><strong>Risco:</strong> chance de perder parte do valor investido.</li>
-            <li><strong>Dividendos:</strong> parte do lucro de uma empresa que é distribuída aos acionistas.</li>
+            <li><strong>Liquidez:</strong> facilidade de transformar o valor em dinheiro na conta.</li>
+            <li><strong>Inflação:</strong> alta geral de preços. Reduz o poder de compra.</li>
+            <li><strong>Juros:</strong> remuneração pelo uso do dinheiro (ou custo de um empréstimo).</li>
+            <li><strong>Risco:</strong> chance de o valor aplicado cair.</li>
+            <li><strong>Dividendos:</strong> parte do lucro de uma empresa distribuída aos acionistas.</li>
           </ul>
-          <div class="highlight">Não tenha vergonha de perguntar. Quem explica de forma clara está do seu lado. Quem complica demais pode estar tentando vender algo.</div>`
+          <div class="destaque">Perguntar não é vergonha. Explicação clara é sinal de respeito. Explicação confusa merece mais perguntas.</div>`
       },
       renda: {
-        titulo: "Renda todo mês",
-        html: `<span class="tag">Investimentos</span>
-          <h2>Fundos Imobiliários e ações que pagam dividendos</h2>
-          <p>Algumas aplicações podem gerar uma renda extra todo mês, sem você precisar vender o investimento.</p>
-          <p><strong>Fundos Imobiliários (FIIs):</strong> você compra cotas de imóveis (shoppings, galpões, prédios). Eles pagam aluguel mensal aos cotistas.</p>
-          <p><strong>Ações que pagam dividendos:</strong> algumas empresas distribuem parte do lucro aos acionistas regularmente.</p>
-          <div class="highlight"><strong>Atenção:</strong> esses produtos têm risco. O valor das cotas e das ações pode subir ou descer. Não é o mesmo que poupança.</div>
-          <p>Antes de investir, converse com alguém de confiança e, se possível, com um profissional certificado. O objetivo aqui é apenas explicar o conceito de forma simples.</p>`
+        titulo: "Renda periódica",
+        html: `<span class="tag">Conceito</span>
+          <h2>Fundos imobiliários e dividendos</h2>
+          <p>Algumas aplicações distribuem valores de tempos em tempos, sem exigir a venda do ativo.</p>
+          <p><strong>Fundos imobiliários (FIIs):</strong> cotas ligadas a imóveis. Podem pagar rendimentos periódicos.</p>
+          <p><strong>Ações com dividendos:</strong> empresas que distribuem parte do lucro aos acionistas.</p>
+          <div class="destaque"><strong>Atenção:</strong> o preço das cotas e das ações oscila. Não é o mesmo que poupança. Aqui só explicamos o conceito.</div>`
       },
       inflacao: {
-        titulo: "Proteção contra a inflação",
-        html: `<span class="tag">Investimentos</span>
+        titulo: "Acompanhar a inflação",
+        html: `<span class="tag">Conceito</span>
           <h2>Tesouro IPCA+</h2>
-          <p>O Tesouro IPCA+ é um título do governo federal. Ele rende a inflação (IPCA) mais uma taxa de juros combinada.</p>
-          <p>Isso significa que o seu dinheiro acompanha a alta dos preços e ainda ganha um pouco a mais.</p>
-          <div class="highlight"><strong>Por que isso importa?</strong> Porque ajuda a manter o poder de compra do seu dinheiro ao longo dos anos.</div>
-          <p>Existe a versão que paga juros a cada seis meses. Isso pode ser útil para quem quer receber um valor periodicamente.</p>
-          <p>Como todo investimento, ele tem regras e prazos. Antes de aplicar, leia com calma ou peça ajuda a alguém de confiança.</p>`
+          <p>É um título do governo que rende a inflação (IPCA) mais uma taxa combinada. A ideia é o dinheiro acompanhar a alta dos preços.</p>
+          <div class="destaque">Existe versão que paga juros periodicamente. Antes de qualquer aplicação, leia as regras e, se possível, converse com alguém de confiança.</div>
+          <p>Este texto não indica compra. Só descreve o que o produto pretende fazer.</p>`
       },
       seguranca: {
-        titulo: "Segurança e liquidez",
-        html: `<span class="tag">Investimentos</span>
+        titulo: "Reserva de emergência",
+        html: `<span class="tag">Conceito</span>
           <h2>Tesouro Selic e CDBs de liquidez diária</h2>
-          <p>Para a reserva de emergência (dinheiro que você pode precisar a qualquer momento), o ideal é ter aplicações seguras e fáceis de resgatar.</p>
-          <p><strong>Tesouro Selic:</strong> título do governo que acompanha a taxa Selic. É muito seguro e tem liquidez diária (você pode resgatar em dias úteis).</p>
-          <p><strong>CDBs de liquidez diária:</strong> oferecidos por bancos. Escolha bancos sólidos e com cobertura do FGC (Fundo Garantidor de Créditos) até R$ 250 mil por CPF e instituição.</p>
-          <div class="highlight">Esses produtos são ótimos para guardar a reserva de emergência. O rendimento costuma ser melhor que a poupança e o risco é baixo.</div>
-          <p>Lembre-se: este app não realiza investimentos. Ele apenas explica os conceitos de forma simples.</p>`
+          <p>Para dinheiro que pode ser necessário em pouco tempo, o foco costuma ser segurança e facilidade de resgate.</p>
+          <p><strong>Tesouro Selic:</strong> título do governo ligado à taxa Selic. Liquidez em dias úteis.</p>
+          <p><strong>CDBs de liquidez diária:</strong> oferecidos por bancos. Verifique se há cobertura do FGC (até R$ 250 mil por CPF e instituição, nas regras atuais).</p>
+          <div class="destaque">O objetivo deste texto é explicar o conceito de reserva de emergência, não indicar produto específico.</div>`
       }
     };
 
-    let paginaAnteriorArtigo = 'aprender';
-
-    function entrar() {
-      document.getElementById('page-login').classList.remove('active');
-      document.getElementById('page-home').classList.add('active');
-    }
+    let paginaAnterior = 'aprender';
 
     function irPara(pagina) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      if (pagina === 'home') document.getElementById('page-home').classList.add('active');
-      else if (pagina === 'aprender') document.getElementById('page-aprender').classList.add('active');
-      else if (pagina === 'proteja') document.getElementById('page-proteja').classList.add('active');
-      else if (pagina === 'investir') document.getElementById('page-investir').classList.add('active');
-      else if (pagina === 'apoio') document.getElementById('page-apoio').classList.add('active');
+      const map = {
+        entrada: 'page-entrada',
+        home: 'page-home',
+        aprender: 'page-aprender',
+        proteja: 'page-proteja',
+        investir: 'page-investir',
+        apoio: 'page-apoio'
+      };
+      const el = document.getElementById(map[pagina]);
+      if (el) el.classList.add('active');
     }
 
     function abrirArtigo(id) {
       const art = artigos[id];
       if (!art) return;
-      if (document.getElementById('page-aprender').classList.contains('active')) paginaAnteriorArtigo = 'aprender';
-      else if (document.getElementById('page-investir').classList.contains('active')) paginaAnteriorArtigo = 'investir';
+      if (document.getElementById('page-aprender').classList.contains('active')) paginaAnterior = 'aprender';
+      if (document.getElementById('page-investir').classList.contains('active')) paginaAnterior = 'investir';
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-artigo').classList.add('active');
       document.getElementById('artigo-titulo').textContent = art.titulo;
@@ -872,8 +742,7 @@
 
     function voltarArtigo() {
       document.getElementById('page-artigo').classList.remove('active');
-      if (paginaAnteriorArtigo === 'investir') document.getElementById('page-investir').classList.add('active');
-      else document.getElementById('page-aprender').classList.add('active');
+      document.getElementById(paginaAnterior === 'investir' ? 'page-investir' : 'page-aprender').classList.add('active');
     }
 
     function mostrarToast(msg) {
